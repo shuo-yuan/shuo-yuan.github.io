@@ -1,16 +1,209 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>My Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CS180 Portfolio</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .project-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .project-card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .project-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .project-card .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .status.completed {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.in-progress {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .status.planned {
+            background: #e2e3e5;
+            color: #383d41;
+            border: 1px solid #d6d8db;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .project-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .project-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to My CS180 Portfolio!</h1>
-    <a href="./1/index.html">Project 1</a>
+    <div class="container">
+        <div class="header">
+            <h1>CS180 Portfolio</h1>
+            <p>Intro to Computer Vision and Computational Photography</p>
+        </div>
+        
+        <div class="projects-grid">
+            <!-- Project 0 -->
+            <div class="project-card">
+                <h2>Project 0: Becoming Friends with Your Camera</h2>
+                <span class="status completed">Completed</span>
+                <p>Exploring camera perspectives and zoom effects through the dolly zoom technique.</p>
+                <a href="./0/index.html" class="project-link">View Project →</a>
+            </div>
+            
+            <!-- Project 1 -->
+            <div class="project-card">
+                <h2>Project 1: [Project Title]</h2>
+                <span class="status planned">Planned</span>
+                <p>Description of your next computer vision project will go here.</p>
+                <a href="#" class="project-link" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+            </div>
+            
+            <!-- Project 2 -->
+            <div class="project-card">
+                <h2>Project 2: [Project Title]</h2>
+                <span class="status planned">Planned</span>
+                <p>Description of your next computer vision project will go here.</p>
+                <a href="#" class="project-link" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+            </div>
+            
+            <!-- Project 3 -->
+            <div class="project-card">
+                <h2>Project 3: [Project Title]</h2>
+                <span class="status planned">Planned</span>
+                <p>Description of your next computer vision project will go here.</p>
+                <a href="#" class="project-link" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+            </div>
+            
+            <!-- Project 4 -->
+            <div class="project-card">
+                <h2>Project 4: [Project Title]</h2>
+                <span class="status planned">Planned</span>
+                <p>Description of your next computer vision project will go here.</p>
+                <a href="#" class="project-link" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+            </div>
+            
+            <!-- Project 5 -->
+            <div class="project-card">
+                <h2>Project 5: [Project Title]</h2>
+                <span class="status planned">Planned</span>
+                <p>Description of your next computer vision project will go here.</p>
+                <a href="#" class="project-link" style="opacity: 0.5; pointer-events: none;">Coming Soon</a>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>This webpage is generated with Cursor and Claude. </p>
+        </div>
+    </div>
 </body>
 </html>
