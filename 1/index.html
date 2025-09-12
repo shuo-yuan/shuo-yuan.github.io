@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1: Images of the Russian Empire -- Colorizing the Prokudin-Gorskii Photo Collection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .part {
+            background: white;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .part h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        
+        .gif-container {
+            text-align: center;
+        }
+        
+        .gif-container img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .gif-container p {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .selfie-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 30px 0 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .part2 .selfie-row {
+            gap: 80px;
+        }
+        
+        .selfie-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .selfie-row img {
+            max-width: 200px;
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+        
+        .part2 .selfie-row img {
+            max-width: 500px;
+            max-height: 500px;
+        }
+        
+        .selfie-caption {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #333; margin-bottom: 40px;">Project 1: Images of the Russian Empire</h1>
+    <h1 style="text-align: center; color: #333; margin-bottom: 40px;">Colorizing the Prokudin-Gorskii Photo Collection</h1>
+    
+    <div class="part overview">
+        <h2>Project Overview</h2>
+        <p style="text-align: justify;">This project implements automatic colorization of the Prokudin-Gorskii photo collection by aligning the three color channel plates (red, green, blue) that were captured separately. The collection, created by Sergei Mikhailovich Prokudin-Gorskii in the early 1900s, represents one of the earliest experiments in color photography.</p>
+
+        <p style="text-align: justify;">The project is divided into three main parts: single-scale alignment for smaller images using exhaustive search, multi-scale pyramid alignment for larger, high-resolution images, and bells and whistles using edge detection for channel alignment.</p>
+    </div>
+
+    <div class="part part1">
+        <h2>Part 1: Single-scale Alignments</h2>
+        <p style="text-align: justify;">This part focuses on aligning the color channels of the images at a single scale using both the NCC (Normalized Cross-Correlation: calculated by dot producting the normalized channels, which is essentially the 2-D array divided by its Frobenius norm). As the image size is small, we can use exhaustive search methods to find the best alignment. This includes a nested for loop that iterates over the possible shifts for each channel, finding the combination that gives that highest NCC. The search range is set to ±15 pixels in this part. </p>
+        <p style="text-align: justify;">NOTE: It is extremely important to <strong>crop the images</strong> before alignment to remove any borders or artifacts that may affect the alignment process. Not removing these will result in terrible misalignments. About 6.7% cropping is done on each side of all the channels for this part.</p>
+        <p style="text-align: justify;">The offset are listed as the captions for the images. For example, G(1, 2) corresponds to the green channel shifted by 1 pixel in the x direction and 2 pixels in the y direction.</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_cathedral.jpg" alt="Cathedral Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Cathedral - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/unaligned_monastery.jpg" alt="Monastery Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Monastery - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/unaligned_tobolsk.jpg" alt="Tobolsk Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Tobolsk - Unaligned</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/single_scale_aligned_ncc_cathedral.jpg" alt="Cathedral NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Cathedral - NCC G(2, 5) R(3, 12)</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/single_scale_aligned_ncc_monastery.jpg" alt="Monastery NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Monastery - NCC G(2, -3) R(2, 3)</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/single_scale_aligned_ncc_tobolsk.jpg" alt="Tobolsk NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Tobolsk - NCC G(3, 3) R(3, 6)</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="part part2">
+        <h2>Part 2: Image Pyramid: Speeding up Alignment for Large Images</h2>
+        <p style="text-align: justify;">This part introduces the concept of an image pyramid to speed up the alignment process for larger images. By creating a multi-scale representation of the images, we can perform alignment at a coarse scale and then refine it at finer scales. This approach significantly reduces the computational cost while maintaining alignment accuracy.</p>
+        <p style="text-align: justify;">To be more specific, the image is first downsampled by a factor of 2 (with sk.transform.rescale) to create a lower-resolution version, repeatedly applying downsampling until the size is manageable for a exhaustive search. A search in the lower-resolution space gives us a coarse shift for alignment, which allows us to initialize the finer alignment at a better position. A finer search is then done starting at the coarsely shifted channels. Therefore, the total shift in this step will be coarse_shift * downsample_factor + fine_shift. This final calculated shift will serve as the coarse shift for the next level of the pyramid. The implementation of the method is done by a simple recursion, where the function first downsamples the channels, recurses and get the coarse shift with one fewer level, shifts the channels according to the coarse shift, searches for the fine shift, and finally returns the calculated shift based on both coarse and fine offsets. The base case is when the passed in num_levels is 1, where a single-scale search is then done to find the shift at the most coarse level.</p>
+        <p style="text-align: justify;">The following images are the results of applying the image pyramid approach to the alignment task on the .tif files, which is much larger than the images in the previous part. The search range is ±5 pixels with 6 levels of factor-of-2-downsampling. NCC is used for metric. About 10% cropping is done on each side for this part. For the smaller .jpg images, the multi-scale search is still applied to demonstrate the effectiveness of the approach and fulfill the requirements of the project. All the .jpg images are processed with a 3-level pyramid of factor 2 downsampling, the search range being ±5 pixels.</p>
+        
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_cathedral.jpg" alt="Cathedral Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Cathedral - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/single_scale_aligned_ncc_cathedral.jpg" alt="Cathedral NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Cathedral - NCC G(2, 5) R(3, 12)</div>
+            </div>
+
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_monastery.jpg" alt="Monastery Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Monastery - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/single_scale_aligned_ncc_monastery.jpg" alt="Monastery NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Monastery - NCC G(2, -3) R(2, 3)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_tobolsk.jpg" alt="Tobolsk Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Tobolsk - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/single_scale_aligned_ncc_tobolsk.jpg" alt="Tobolsk NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Tobolsk - NCC G(3, 3) R(3, 6)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_church.jpg" alt="Church Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Church - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_church.jpg" alt="Church Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Church - Pyramid NCC G(4, 25) R(-4, 58)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_emir.jpg" alt="Emir Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Emir - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_emir.jpg" alt="Emir Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Emir - Pyramid NCC G(24, 49) R(101, -283)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_harvesters.jpg" alt="Harvesters Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Harvesters - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_harvesters.jpg" alt="Harvesters Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Harvesters - Pyramid NCC G(16, 59) R(13, 124)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_icon.jpg" alt="Icon Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Icon - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_icon.jpg" alt="Icon Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Icon - Pyramid NCC G(17, 41) R(23, 89)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_italil.jpg" alt="Italil Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Italil - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_italil.jpg" alt="Italil Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Italil - Pyramid NCC G(21, 38) R(35, 76)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_lastochikino.jpg" alt="Lastochikino Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Lastochikino - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_lastochikino.jpg" alt="Lastochikino Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Lastochikino - Pyramid NCC G(-2, -2) R(-8, 75)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_lugano.jpg" alt="Lugano Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Lugano - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_lugano.jpg" alt="Lugano Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Lugano - Pyramid NCC G(-16, 41) R(-29, 92)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_melons.jpg" alt="Melons Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Melons - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_melons.jpg" alt="Melons Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Melons - Pyramid NCC G(10,81) R(13, 178)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_self_portrait.jpg" alt="Self Portrait Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Self Portrait - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_self_portrait.jpg" alt="Self Portrait Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Self Portrait - Pyramid NCC G(29, 78) R(37, 176)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_siren.jpg" alt="Siren Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Siren - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_siren.jpg" alt="Siren Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Siren - Pyramid NCC G(-6, 49) R(-25, 95)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/unaligned_three_generations.jpg" alt="Three Generations Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Three Generations - Unaligned</div>
+            </div>
+            <div class="selfie-item">
+            <img src="media/pyramid_aligned_ncc_three_generations.jpg" alt="Three Generations Pyramid NCC" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Three Generations - Pyramid NCC G(14, 53) R(11, 112)</div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="part part3">
+        <h2>Part 3: Bells and Whistles</h2>
+        <p style="text-align: justify;">Notice that the emir image is not aligned perfectly. This is because the brightness of the different channels are significantly different. To address this, we can use edge detection to find the edges of the images and then use the edges to align the images. Sobel edge detector is used in this part.</p>
+        <p style="text-align: justify;">In addition, auto-cropping is also applied as the sides of the images are leading to some artifacts in the aligned images. All input images are cropped 10% from the sides to remove the artifacts.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+            <img src="media/edge_pyramid_sobel_aligned_ncc_emir.jpg" alt="Emir Edge Pyramid NCC Sobel" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Edges of Emir - Pyramid NCC using edge detection</div>
+        </div>
+        <div class="selfie-item">
+            <img src="media/pyramid_sobel_aligned_ncc_emir.jpg" alt="Emir Unaligned" style="max-width: 350px; max-height: 350px;">
+            <div class="selfie-caption">Emir - Pyramid NCC using edge detection G(24, 49) R(40, 107)</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
