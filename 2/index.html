@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 2: Fun with Filters and Frequencies!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .part {
+            background: white;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .part h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        
+        .gif-container {
+            text-align: center;
+        }
+        
+        .gif-container img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .gif-container p {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .selfie-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0 20px 0;
+            flex-wrap: nowrap;
+            padding: 0 10px;
+        }
+        
+        .code-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0 20px 0;
+        }
+        
+        .part2 .selfie-row {
+            gap: 80px;
+        }
+        
+        .selfie-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .selfie-row img {
+            max-width: 200px;
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+        
+        .part2 .selfie-row img {
+            max-width: 500px;
+            max-height: 500px;
+        }
+        
+        .selfie-caption {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        
+        .code-block {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0;
+        }
+        
+        .code-block pre {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 0;
+            overflow: hidden;
+            font-size: 11px;
+            line-height: 1.4;
+            height: auto;
+        }
+        
+        .code-block code {
+            text-align: left;
+            display: block;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-caption {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        .runtime-table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 900px;
+        }
+        
+        .runtime-table th, .runtime-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            width: 25%;
+        }
+        
+        .runtime-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .table-caption {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        /* Hybrid Images Layout Styles */
+        .hybrid-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px auto 50px auto;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            background-color: #fafafa;
+            max-width: 1000px;
+        }
+        
+        .hybrid-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+            max-width: 450px;
+        }
+        
+        .hybrid-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .hybrid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hybrid-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 0 0 auto;
+            justify-content: center;
+        }
+        
+        .hybrid-right img {
+            border: 2px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        
+        .part2 h3 {
+            color: #444;
+            font-size: 20px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* Specific styling for spectrum images */
+        .hybrid-container .hybrid-left .hybrid-row {
+            gap: 60px;
+        }
+        
+        .hybrid-container .hybrid-left {
+            gap: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #333; margin-bottom: 40px;">Project 2: Fun with Filters and Frequencies!</h1>
+    
+    <div class="part overview">
+        <h2>Project Overview</h2>
+        <p style="text-align: justify;">This project implements a variety of filters and frequency-based operations on images, including convolutions, Gaussian blur, Laplacian, image sharpening, image blending, etc..</p>
+    </div>
+
+    <div class="part part1">
+        <h2>Part 1.1: Convolutions from Scratch</h2>
+        <p style="text-align: justify;">This part implements the convolution operation from scratch using 4 for-loops and 2 for-loops. The boundaries are padded with zeros, and the output images are ensured to be the same size as the input image using <code>np.pad</code>. This gives the same result as the output from <code>scipy.signal.convolve2d</code>. However, the runtimes of them are significantly different. The 4-for-loop convolution is much slower than the 2-for-loop convolution, which is still much slower than the <code>scipy.signal.convolve2d</code> (possibily because of the internal optimization in existing libraries).</p>
+        <p style="text-align: justify;">The following images are the results of applying the convolution operation to the selfie image using 9x9 box filter, finite difference operator D<sub>x</sub>, and finite difference operator D<sub>y</sub>. The 2-for-loop convolution is much faster than the 4-for-loop convolution, and the results are the same. Each of the convolution is only presented once for the sake of brevity; results from all three implementations are the same and can be found in the notebook submission.</p>
+        <div class="code-row">
+            <div class="code-block">
+                <pre><code>def convolve_4_for(image, filter):
+    image_height, image_width = image.shape
+    filter_height, filter_width = filter.shape
+    h_pad_size, v_pad_size = filter_height - 1, filter_width - 1
+    padded_image = np.pad(image, ((h_pad_size, h_pad_size), (v_pad_size, v_pad_size)))
+    convolved_image = np.zeros((image_height + 2 * h_pad_size - filter_height + 1, image_width + 2 * v_pad_size - filter_width + 1))
+    for i in range(padded_image.shape[0] - filter_height + 1):
+        for j in range(padded_image.shape[1] - filter_width + 1):
+            sum = 0
+            for fi in range(filter_height):
+                for fj in range(filter_width):
+                    sum += padded_image[i + fi, j + fj] * filter[fi, fj]
+            convolved_image[i, j] = sum
+    return convolved_image</code></pre>
+                <div class="code-caption">Implementation of 4-for-loop convolution</div>
+            </div>
+
+            <div class="code-block">
+                <pre><code>def convolve_2_for(image, filter):
+    image_height, image_width = image.shape
+    filter_height, filter_width = filter.shape
+    h_pad_size, v_pad_size = filter_height - 1, filter_width - 1
+    padded_image = np.pad(image, ((h_pad_size, h_pad_size), (v_pad_size, v_pad_size)))
+    convolved_image = np.zeros((image_height + 2 * h_pad_size - filter_height + 1, image_width + 2 * v_pad_size - filter_width + 1))
+    for i in range(padded_image.shape[0] - filter_height + 1):
+        for j in range(padded_image.shape[1] - filter_width + 1):
+            region = padded_image[i:i + filter_height, j:j + filter_width]
+            convolved_image[i, j] = np.sum(region * filter)
+    return convolved_image</code></pre>
+                <div class="code-caption">Implementation of 2-for-loop convolution</div>
+        </div>
+    </div>
+    
+        <table class="runtime-table">
+            <thead>
+                <tr>
+                    <th>9x9 Box Filter</th>
+                    <th>4-for-loop</th>
+                    <th>2-for-loop</th>
+                    <th><code>scipy.signal.convolve2d</code></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Time</strong></td>
+                    <td>7.78s</td>
+                    <td>0.85s</td>
+                    <td>0.03s</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="table-caption">Runtime of the convolution function with different implementations</div>
+        
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part1_1/selfie.jpg" alt="Original Selfie" style="max-width: 250px; max-height: 250px;">
+                <div class="selfie-caption">Original Image</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_1/selfie_box_filter_convolve2d.jpg" alt="Box Filter Result" style="max-width: 250px; max-height: 250px;">
+                <div class="selfie-caption">9x9 Box Filter</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_1/selfie_gradient_dx_convolve2d.png" alt="Gradient Dx Result" style="max-width: 250px; max-height: 250px;">
+                <div class="selfie-caption">Finite Difference D<sub>x</sub></div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_1/selfie_gradient_dy_convolve2d.png" alt="Gradient Dy Result" style="max-width: 250px; max-height: 250px;">
+                <div class="selfie-caption">Finite Difference D<sub>y</sub></div>
+            </div>
+        </div>
+
+        </div>
+        </div>
+    
+    <div class="part part1">
+        <h2>Part 1.2: Finite Difference Operator</h2>
+        <p style="text-align: justify;">This part introduces the finite difference operator, which is a discrete approximation of the gradient operator. The magnitude of gradient is calculated with the partial derivative of the image in the x and y directions. The image is then binarized, and the threshold is chosen based on a sweep of the threshold values. The GIF is included to visualize the hyperparameter sweep. The final threshold is chosen to be 80, which shows most parts of the edges and removes most of the noise.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part1_2/cameraman.png" alt="Original Cameraman" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Original Image</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_2/cameraman_horizontal_edges.png" alt="Cameraman Horizontal Edges" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Horizontal Edges (D<sub>y</sub>)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_2/cameraman_vertical_edges.png" alt="Cameraman Vertical Edges" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Vertical Edges (D<sub>x</sub>)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part1_2/cameraman_gradient_magnitude.png" alt="Cameraman Gradient Magnitude" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Gradient Magnitude</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_2/cameraman_gradient_magnitude_thresholded.png" alt="Cameraman Gradient Magnitude Thresholded" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Binarized and Thresholded (threshold=80)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_2/gradient_threshold_animation.gif" alt="Gradient Threshold Animation" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Threshold Animation</div>
+            </div>
+        </div>
+
+        </div>
+    
+    <div class="part part1">
+        <h2>Part 1.3: Derivative of Gaussian (DoG) Filter</h2>
+        <p style="text-align: justify;">The results from the finite difference operators are rather noisy. Recalling from the lecture, we can smooth the image with a Gaussian filter and then apply the finite difference operator to the smoothed image. Fortunately enough, convolution is associative, so we can convolve the derivitives with the gaussian filter first, and then convolve them with the original image.</p>
+        <p style="text-align: justify;">The results of the edges from the DoG filters are much cleaner and smoother than the results from the finite difference operators, with less noise in the background.</p>
+        <p style="text-align: justify;">As I increase alpha from 3 to 10, the images are getting sharper as there are more clear edges. However, making alpha too large will lead to a noisy background, as shown in the images with alpha=10.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part1_3/gaussian_2d_kernel.png" alt="2D Gaussian Kernel" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">2D Gaussian Kernel</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_3/derivative_of_gaussian_dx.png" alt="Derivative of Gaussian Dx" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Derivative of Gaussian D<sub>x</sub></div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_3/derivative_of_gaussian_dy.png" alt="Derivative of Gaussian Dy" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Derivative of Gaussian D<sub>y</sub></div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part1_3/cameraman.png" alt="Original Cameraman" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Original Image</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_3/cameraman_gaussian.png" alt="Cameraman Gaussian Blurred" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">Gaussian Blurred</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_3/dog_cameraman_gradient_magnitude.png" alt="DoG Cameraman Gradient Magnitude" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">DoG Gradient Magnitude</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part1_3/dog_cameraman_horizontal_edges.png" alt="DoG Cameraman Horizontal Edges" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">DoG Horizontal Edges</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_3/dog_cameraman_vertical_edges.png" alt="DoG Cameraman Vertical Edges" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">DoG Vertical Edges</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part1_3/cameraman_dog_gradient_magnitude_thresholded.png" alt="DoG Cameraman Thresholded" style="max-width: 350px; max-height: 350px;">
+                <div class="selfie-caption">DoG Thresholded</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="part part2">
+        <h2>Part 2.1: Image "Sharpening"</h2>
+        <p style="text-align: justify;">This part of the project implements the unsharp mask filter to sharpen images. To sharpen an image, we want to emphasize more on the high-frequency components. Therefore, we can manually add the high frequencies to the original image. To get the high frequencies, we can substract the gaussian-blurred (low-pass filtered) image from the original image. Note that since convolutions are commutative and associative, we can combine the operations into a single convolution with the unsharp mask filter. The following images are the results of applying the unsharp mask filter to the original image and some intermediate outputs. There is also a hyperparameter alpha to control the strength of the sharpening. The larger the alpha, the more high-frequency components are added to the original image. Below is a formula that explains the unsharp mask filter.</p>
+        <p style="text-align: justify;">Note that the high frequencies are quite noisy, so I normalized the high frequencies to make sure they are visually appealing.</p>
+        <p style="text-align: justify;">As I increase alpha from 3 to 10, the images are getting sharper and the edges are clearer. However, making alpha too large will lead to a noisy background, as shown in the images with alpha=10.</p>
+
+        <div class="selfie-row" style="justify-content: center;">
+            <div class="selfie-item" style="max-width: 80%; text-align: center;">
+                <img src="media/part2_1/unsharp_mask_filter.png" alt="Unsharp Mask Filter" style="max-width: 100%; height: auto;">
+                <div class="selfie-caption">Unsharp Mask Filter</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_1/taj.jpg" alt="Original Taj" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Original Taj</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/blurred_taj.png" alt="Blurred Taj" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Gaussian Blurred Taj</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/high_freq_taj.png" alt="High Frequency Taj" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">High Frequencies Taj</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_1/normalized_high_freq_taj.png" alt="Normalized High Freq Taj" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Normalized High Freq Taj</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/sharpened_taj_single_convolution.png" alt="Sharpened Taj Single Conv" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Sharpened Taj (alpha=3)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/sharpened_taj_single_convolution_alpha_10.png" alt="Sharpened Taj" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Sharpened Taj (alpha=10)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_1/chelsea.jpg" alt="Original Chelsea" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Original Chelsea</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/blurred_chelsea.png" alt="Blurred Chelsea" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Gaussian Blurred Chelsea</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/high_freq_chelsea.png" alt="High Frequency Chelsea" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">High Frequencies Chelsea</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_1/normalized_high_freq_chelsea.png" alt="Normalized High Freq Chelsea" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Normalized High Freq Chelsea</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/sharpened_chelsea_single_convolution.png" alt="Sharpened Chelsea Single Conv" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Sharpened Chelsea (alpha=3)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_1/sharpened_chelsea_single_convolution_alpha_10.png" alt="Sharpened Chelsea" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Sharpened Chelsea (alpha=10)</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part 2.2: Hybrid Images</h2>
+        <p style="text-align: justify;">This part of the project implements the hybrid images, which is a combination of the low-pass filtered image and the high-pass filtered image. The low-pass filtered image is obtained by convolving the image with a Gaussian filter, and the high-pass filtered image is obtained by subtracting the low-pass filtered image from the original image. The rationale behind this is that human's perception of different frequencies varies at different distances. when looking close up, humans are more likely to perceive the high frequencies, whereas when we stand further, we are more likely to preceive the low frequencies and ignore the high frequencies.</p>
+        <p style="text-align: justify;">The following images are some examples of hybrid images, including Derek and Nutmeg, the Chelsea Munich Football Club, and the tigerlion.</p>
+        
+        <!-- Derek + Cat Hybrid -->
+        <div class="hybrid-container">
+            <div class="hybrid-left">
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/DerekPicture.jpg" alt="Derek Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Derek Original</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/nutmeg.jpg" alt="Cat Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Cat Original</div>
+                    </div>
+                </div>
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/low_frequencies_derek.png" alt="Derek Low Frequencies" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Derek Low Frequencies</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/high_frequencies_cat.png" alt="Cat High Frequencies" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Cat High Frequencies</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hybrid-right">
+                <img src="media/part2_2/hybrid_image_derek_cat.png" alt="Derek Cat Hybrid" style="width: 400px; height: 400px; object-fit: cover;">
+                <div class="selfie-caption">Derek + Cat Hybrid</div>
+            </div>
+        </div>
+
+        <!-- Chelsea + Bayern Hybrid -->
+        <div class="hybrid-container">
+            <div class="hybrid-left">
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/chelsea_logo.png" alt="Chelsea Logo Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Chelsea Logo Original</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/bayern_logo.png" alt="Bayern Logo Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Bayern Logo Original</div>
+                    </div>
+                </div>
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/low_frequencies_chelsea_logo.png" alt="Chelsea Low Frequencies" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Chelsea Low Frequencies</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/high_frequencies_bayern_logo.png" alt="Bayern High Frequencies" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Bayern High Frequencies</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hybrid-right">
+                <img src="media/part2_2/hybrid_image_chelsea_logo_bayern_logo.png" alt="Chelsea Bayern Hybrid" style="width: 400px; height: 400px; object-fit: cover;">
+                <div class="selfie-caption">Chelsea + Bayern Hybrid</div>
+            </div>
+        </div>
+
+        <!-- Tiger + Lion Hybrid -->
+        <div class="hybrid-container">
+            <div class="hybrid-left">
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/tiger.jpg" alt="Tiger Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Tiger Original</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/lion.jpg" alt="Lion Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Lion Original</div>
+                    </div>
+                </div>
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/low_frequencies_tiger.png" alt="Tiger Low Frequencies" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Tiger Low Frequencies</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_2/high_frequencies_lion.png" alt="Lion High Frequencies" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Lion High Frequencies</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hybrid-right">
+                <img src="media/part2_2/hybrid_image_tiger_lion.png" alt="Tiger Lion Hybrid" style="width: 400px; height: 400px; object-fit: cover;">
+                <div class="selfie-caption">Tiger + Lion Hybrid</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">We now analyze the frequency spectrum for the first set of images (Derek and Nutmeg). We can see that passing the Derek image through a Gaussian filter significatnly removes the high frequencies and only keeps the low frequencies in the center of the spectrum. On the other hand, passing the Nutmeg image through a Laplacian filter removes part of the low frequencies, resulting in a darker area in the center compared to the specturm of the original Nutmeg image. The final resulting spectrum of the hybrid image is the result of simply adding up the two filtered frequency spectra, which means the resulting image has the high frequencies from the Nutmeg image and the low frequencies from the Derek image. </p>
+        
+        <!-- Frequency Spectrum Analysis -->
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_2/derek_original_frequency_spectrum.png" alt="Derek Original Spectrum" style="max-width: 180px; max-height: 300px; width: auto; height: auto; object-fit: contain;">
+                <div class="selfie-caption">Derek Original Spectrum</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_2/derek_low_freq_frequency_spectrum.png" alt="Derek Low Freq Spectrum" style="max-width: 180px; max-height: 300px; width: auto; height: auto; object-fit: contain;">
+                <div class="selfie-caption">Derek Low Freq Spectrum</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_2/cat_original_frequency_spectrum.png" alt="Cat Original Spectrum" style="max-width: 180px; max-height: 300px; width: auto; height: auto; object-fit: contain;">
+                <div class="selfie-caption">Cat Original Spectrum</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_2/cat_high_freq_frequency_spectrum.png" alt="Cat High Freq Spectrum" style="max-width: 180px; max-height: 300px; width: auto; height: auto; object-fit: contain;">
+                <div class="selfie-caption">Cat High Freq Spectrum</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_2/hybrid_image_frequency_spectrum.png" alt="Hybrid Image Spectrum" style="max-width: 180px; max-height: 300px; width: auto; height: auto; object-fit: contain;">
+                <div class="selfie-caption">Hybrid Image Spectrum</div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="part part2">
+        <h2>Part 2.3: Gaussian and Laplacian Stacks & Part 2.4: Multiresolution Blending</h2>
+        <p style="text-align: justify;">This part of the project implements the Gaussian and Laplacian stacks. To create a Gaussian stack, we can keep convolving the last image of the stack with a Gaussian filter and putting the result in the next position of the stack. To create a i-th image in the Laplacian stack, we can take the difference between the i-th image and the (i+1)-th image in the Gaussian stack to get the specific band of frequencies. The last image in the Laplacian stack is the also the last image in the Gaussian stack: this level stores the lowest frequencies of the image and makes sure that we can get the original image back by adding up all the images in the Laplacian stack.</p>
+        <p style="text-align: justify;">Below is the Gaussian stack and Laplacian stack for both the apple and the orange image. Note that for the Laplacian stacks, the images are normalized to make them visually appealing; the colors are therefore not accurate and won't align with the exact color from the project page.</p>
+        
+        <!-- Apple Gaussian Stack -->
+        <h3>Apple Gaussian Stack</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_gaussian_stack_0.png" alt="Apple Gaussian Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_gaussian_stack_1.png" alt="Apple Gaussian Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_gaussian_stack_2.png" alt="Apple Gaussian Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_gaussian_stack_3.png" alt="Apple Gaussian Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_gaussian_stack_4.png" alt="Apple Gaussian Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_gaussian_stack_5.png" alt="Apple Gaussian Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <!-- Apple Laplacian Stack -->
+        <h3>Apple Laplacian Stack</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_laplacian_stack_0.png" alt="Apple Laplacian Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_laplacian_stack_1.png" alt="Apple Laplacian Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_laplacian_stack_2.png" alt="Apple Laplacian Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_laplacian_stack_3.png" alt="Apple Laplacian Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_laplacian_stack_4.png" alt="Apple Laplacian Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_laplacian_stack_5.png" alt="Apple Laplacian Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <!-- Orange Gaussian Stack -->
+        <h3>Orange Gaussian Stack</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_gaussian_stack_0.png" alt="Orange Gaussian Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_gaussian_stack_1.png" alt="Orange Gaussian Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_gaussian_stack_2.png" alt="Orange Gaussian Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_gaussian_stack_3.png" alt="Orange Gaussian Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_gaussian_stack_4.png" alt="Orange Gaussian Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_gaussian_stack_5.png" alt="Orange Gaussian Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <!-- Orange Laplacian Stack -->
+        <h3>Orange Laplacian Stack</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_laplacian_stack_0.png" alt="Orange Laplacian Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_laplacian_stack_1.png" alt="Orange Laplacian Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_laplacian_stack_2.png" alt="Orange Laplacian Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_laplacian_stack_3.png" alt="Orange Laplacian Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_laplacian_stack_4.png" alt="Orange Laplacian Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_laplacian_stack_5.png" alt="Orange Laplacian Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <!-- Apple Left Laplacian Stack (for blending) -->
+        <h3>Apple Left Laplacian Stack (for blending)</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_laplacian_stack_0.png" alt="Apple Left Laplacian Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_laplacian_stack_1.png" alt="Apple Left Laplacian Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_laplacian_stack_2.png" alt="Apple Left Laplacian Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_laplacian_stack_3.png" alt="Apple Left Laplacian Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_laplacian_stack_4.png" alt="Apple Left Laplacian Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_laplacian_stack_5.png" alt="Apple Left Laplacian Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <!-- Orange Right Laplacian Stack (for blending) -->
+        <h3>Orange Right Laplacian Stack (for blending)</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_laplacian_stack_0.png" alt="Orange Right Laplacian Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_laplacian_stack_1.png" alt="Orange Right Laplacian Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_laplacian_stack_2.png" alt="Orange Right Laplacian Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_laplacian_stack_3.png" alt="Orange Right Laplacian Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_laplacian_stack_4.png" alt="Orange Right Laplacian Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_laplacian_stack_5.png" alt="Orange Right Laplacian Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <!-- Oraple Blended Stack -->
+        <h3>Oraple (Blended) Stack</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/oraple_level_0.png" alt="Oraple Level 0" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 0</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/oraple_level_1.png" alt="Oraple Level 1" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/oraple_level_2.png" alt="Oraple Level 2" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/oraple_level_3.png" alt="Oraple Level 3" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/oraple_level_4.png" alt="Oraple Level 4" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 4</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/oraple_level_5.png" alt="Oraple Level 5" style="width: 150px; height: 150px; object-fit: cover;">
+                <div class="selfie-caption">Level 5</div>
+            </div>
+        </div>
+
+        <h3>Oraple!</h3>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_3/apple_left_image.png" alt="apple left" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Apple Left</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_right_image.png" alt="orange right" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Orange Right</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_3/orange_apple_image.png" alt="oraple" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Oraple!</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">The following image is a blend between a soccer ball and a watermelon, using the same left/right mask we used for oraple. Let's call it a soccer-melon.</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="media/part2_4/soccer.jpg" alt="soccer" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Apple Left</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_4/watermelon.jpg" alt="watermelon" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Orange Right</div>
+            </div>
+            <div class="selfie-item">
+                <img src="media/part2_4/soccer_watermelon_image.png" alt="soccer-melon" style="width: 300px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Oraple!</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">The following two images are blended with a irregular mask. The masks are shown below. The intended effect is to move Monet's painting (Woman with a Parasol) to the real world.</p>
+    
+        <div class="hybrid-container">
+            <div class="hybrid-left">
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_4/monet.jpg" alt="Woman with a Parasol Original" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Woman with a Parasol</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_4/grass.jpeg" alt="grass" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Grass</div>
+                    </div>
+                </div>
+                <div class="hybrid-row">
+                    <div class="hybrid-item">
+                        <img src="media/part2_4/monet_mask.png" alt="monet mask" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Mask for Woman with a Parasol</div>
+                    </div>
+                    <div class="hybrid-item">
+                        <img src="media/part2_4/grassland_mask.png" alt="grass mask" style="width: 200px; height: 200px; object-fit: cover;">
+                        <div class="selfie-caption">Mask for Grass</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hybrid-right">
+                <img src="media/part2_4/monet_irl_image.png" alt="monet irl" style="width: 400px; height: 400px; object-fit: cover;">
+                <div class="selfie-caption">Monet + Grass Hybrid</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
