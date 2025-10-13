@@ -212,6 +212,31 @@
             box-shadow: 0 4px 16px rgba(0,0,0,0.2);
         }
         
+        /* Fix white space issues in hybrid containers */
+        .hybrid-container img {
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .hybrid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .hybrid-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 0 0 auto;
+            justify-content: center;
+            height: 100%;
+        }
+        
         .part2 h3 {
             color: #444;
             font-size: 20px;
