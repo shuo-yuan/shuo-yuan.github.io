@@ -422,33 +422,33 @@
 
         <div class="selfie-row">
             <div class="selfie-item">
-                <img src="part_a4/warpped_lec_1.png" alt="warped_lec_1" style="width: 750px; height: 280px; object-fit: cover;">
+                <img src="part_a4/warpped_lec_1.jpg" alt="warped_lec_1" style="width: 750px; height: 280px; object-fit: cover;">
                 <div class="selfie-caption">Warped Lecture (left)</div>
             </div>
             <div class="selfie-item">
-                <img src="part_a4/mask_lec_1.png" alt="mask_lec_1" style="width: 750px; height: 280px; object-fit: cover;">
+                <img src="part_a4/mask_1.jpg" alt="mask_lec_1" style="width: 750px; height: 280px; object-fit: cover;">
                 <div class="selfie-caption">Mask for Lecture (left)</div>
             </div>
         </div>
 
         <div class="selfie-row">
             <div class="selfie-item">
-                <img src="part_a4/warpped_lec_2.png" alt="warped_lec_2" style="width: 750px; height: 280px; object-fit: cover;">
+                <img src="part_a4/warpped_lec_2.jpg" alt="warped_lec_2" style="width: 750px; height: 280px; object-fit: cover;">
                 <div class="selfie-caption">Warped Lecture (middle)</div>
             </div>
             <div class="selfie-item">
-                <img src="part_a4/mask_lec_2.png" alt="mask_lec_2" style="width: 750px; height: 280px; object-fit: cover;">
+                <img src="part_a4/mask_2.jpg" alt="mask_lec_2" style="width: 750px; height: 280px; object-fit: cover;">
                 <div class="selfie-caption">Mask for Lecture (middle)</div>
             </div>
         </div>
 
         <div class="selfie-row">
             <div class="selfie-item">
-                <img src="part_a4/warpped_lec_3.png" alt="warped_lec_3" style="width: 750px; height: 280px; object-fit: cover;">
+                <img src="part_a4/warpped_lec_3.jpg" alt="warped_lec_3" style="width: 750px; height: 280px; object-fit: cover;">
                 <div class="selfie-caption">Warped Lecture (right)</div>
             </div>
             <div class="selfie-item">
-                <img src="part_a4/mask_lec_3.png" alt="mask_lec_3" style="width: 750px; height: 280px; object-fit: cover;">
+                <img src="part_a4/mask_3.jpg" alt="mask_lec_3" style="width: 750px; height: 280px; object-fit: cover;">
                 <div class="selfie-caption">Mask for Lecture (right)</div>
             </div>
         </div>
@@ -503,6 +503,111 @@
                 <div class="selfie-caption">Inside Sky Lab</div>
             </div>
         </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.1: Harris Corner Detection</h2>
+        <p style="text-align: justify;">In this section, I use the Harris corner detection algorithm to detect the corners of the images. However, naively choosing the strongest corners will lead to a uneven distribution of the features. Therefore, I applied Adaptive Non-Maximal Suppression (ANMS) to choose the corners. The following images are the results of the Harris corner detection and the Adaptive Non-Maximal Suppression.</p>
+        <p style="text-align: justify;">ANMS is implemented by the following steps:</p>
+        <ol>
+            <li>Detect the corners of the image using the Harris corner detection algorithm and sort the corners by the Harris response score</li>
+            <li>Maintain a list of already selected corners, initialized as empty</li>
+            <li>for the i-th corner, calculate the minimum distance to the already selected corners with a response score threshold of 0.9</li>
+            <li>Sort the corners by the minimum distance and select the top k corners</li>
+        </ol>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="part_b1/lecture_1_harris_corners.png" alt="lecture_1_harris_corners" style="width: 350px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Lecture 1 with all corners detected by Harris corner detection</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b1/lecture_1_strongest_500_harris_corners.png" alt="lecture_1_strongest_500_harris_corners" style="width: 350px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Lecture 1 with 500 strongest corners</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b1/lecture_1_ANMS_500_harris_corners.png" alt="lecture_1_ANMS_500_harris_corners" style="width: 350px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Lecture 1 with 500 corners selected by ANMS</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.2: Feature Descriptor Extraction</h2>
+        <p style="text-align: justify;">This part of the project implements the feature descriptor extraction. The feature descriptor is a 8 by 8 square patch, downsampled from a 40 by 40 patch on the original scale. All the descriptors here are axis-aligned since no rotation is involved in taking the pictures. The following images are some examples of the feature descriptors from the left lecture image.</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="part_b2/lecture_1_descriptor_patch_0.png" alt="lecture_1_descriptor_patch_0" style="width: 350px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Lecture Descriptor Patch Example 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b2/lecture_1_descriptor_patch_1.png" alt="lecture_1_descriptor_patch_1" style="width: 350px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Lecture Descriptor Patch Example 2</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b2/lecture_1_descriptor_patch_2.png" alt="lecture_1_descriptor_patch_2" style="width: 350px; height: 300px; object-fit: cover;">
+                <div class="selfie-caption">Lecture Descriptor Patch Example 3</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.3: Feature Matching</h2>
+        <p style="text-align: justify;">This part of the project implements the feature matching process. The feature matching is done by iterating through all the feature descriptors; for each descriptor, track the ratio between the errors of the best and the second best match. If the ratio is less than 0.7, then we consider it as a good match.</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="part_b3/lecture_1_2_matches.png" alt="lecture_1_2_matches" style="width: 900px !important; max-width: none !important; height: auto;">
+                <div class="selfie-caption">Lecture Matches</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.4: RANSAC for Robust Homography</h2>
+        <p style="text-align: justify;">This part of the project implements the RANSAC algorithm to robustly estimate the homography matrix. The RANSAC algorithm is implemented by the following steps:</p>
+        <ol>
+            <li>Randomly sample 4 points from the matches</li>
+            <li>Estimate the homography matrix using the 4 points</li>
+            <li>Count the number of inliers</li>
+            <li>Repeat the process for a certain number of iterations</li>
+            <li>With the most inliers, estimate the homography matrix with all the inliers</li>
+            <li>Return the homography matrix</li>
+        </ol>
+        <p style="text-align: justify;">The following images are some examples of the auto-stitched images and a comparison between the stitching with manually picked correspondences.</p>
+        
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="part_a4/during_lecture.jpg" alt="" style="width: 800px; height: 280px; object-fit: cover;">
+                <div class="selfie-caption">During Lecture (Stitched Manually)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b4/during_lecture_auto.jpg" alt="" style="width: 800px; height: 280px; object-fit: cover;">
+                <div class="selfie-caption">During Lecture (Stitched with RANSAC)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="part_a4/outside_soda.jpg" alt="" style="width: 800px; height: 280px; object-fit: cover;">
+                <div class="selfie-caption">Outside Soda (Stitched Manually)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b4/outside_soda_auto.jpg" alt="" style="width: 800px; height: 280px; object-fit: cover;">
+                <div class="selfie-caption">Outside Soda (Stitched with RANSAC)</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="part_a4/inside_sky.jpg" alt="" style="width: 800px; height: 280px; object-fit: cover;">
+                <div class="selfie-caption">Inside Sky Lab (Stitched Manually)</div>
+            </div>
+            <div class="selfie-item">
+                <img src="part_b4/inside_sky_auto.jpg" alt="" style="width: 800px; height: 280px; object-fit: cover;">
+                <div class="selfie-caption">Inside Sky Lab (Stitched with RANSAC)</div>
+            </div>
+        </div>
+
+
     </div>
 
 </body>
