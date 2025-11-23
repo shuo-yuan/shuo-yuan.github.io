@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 5: Fun with Diffusion Models</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .part {
+            background: white;
+            margin: 20px 0;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .part h2 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        
+        .gif-container {
+            text-align: center;
+        }
+        
+        .gif-container img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .gif-container p {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .selfie-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0 20px 0;
+            flex-wrap: nowrap;
+            padding: 0 10px;
+        }
+        
+        .code-row {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin: 30px 0 20px 0;
+        }
+        
+        .part2 .selfie-row {
+            gap: 80px;
+        }
+        
+        .selfie-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .selfie-row img {
+            max-width: 200px;
+            max-height: 200px;
+            width: auto;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+        
+        .part2 .selfie-row img {
+            max-width: 500px;
+            max-height: 500px;
+        }
+        
+        .selfie-caption {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 4px;
+        }
+        
+        .code-block {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0;
+        }
+        
+        .code-block pre {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 0;
+            overflow: hidden;
+            font-size: 11px;
+            line-height: 1.4;
+            height: auto;
+        }
+        
+        .code-block code {
+            text-align: left;
+            display: block;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .code-caption {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        .runtime-table {
+            margin: 30px auto;
+            border-collapse: collapse;
+            width: 90%;
+            max-width: 900px;
+        }
+        
+        .runtime-table th, .runtime-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+            width: 25%;
+        }
+        
+        .runtime-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        
+        .table-caption {
+            font-size: 14px;
+            color: #666;
+            font-weight: 500;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        /* Hybrid Images Layout Styles */
+        .hybrid-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            margin: 30px auto 50px auto;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            background-color: #fafafa;
+            max-width: 1000px;
+        }
+        
+        .hybrid-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            flex: 1;
+            max-width: 450px;
+        }
+        
+        .hybrid-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .hybrid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hybrid-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 0 0 auto;
+            justify-content: center;
+        }
+        
+        .hybrid-right img {
+            border: 2px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        
+        /* Fix white space issues in hybrid containers */
+        .hybrid-container img {
+            display: block;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .hybrid-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+        
+        .hybrid-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            flex: 0 0 auto;
+            justify-content: center;
+            height: 100%;
+        }
+        
+        .part2 h3 {
+            color: #444;
+            font-size: 20px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        /* Specific styling for spectrum images */
+        .hybrid-container .hybrid-left .hybrid-row {
+            gap: 60px;
+        }
+        
+        .hybrid-container .hybrid-left {
+            gap: 60px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color: #333; margin-bottom: 40px;">Project 5: Fun with Diffusion Models</h1>
+
+    <div class="part part1">
+        <h2>Part 0: Setup and Playing with my own Text Prompt</h2>
+        <p style="text-align: justify;">This part sets up the environment and plays with my own text prompt. We can observe that for prompts that are too abstract or OOD, the generated images are not very good. However, for prompts that are more specific and in-domain, the generated images are much better. The seed chosen is here is 100 for reproducibility. </p>
+        <p style="text-align: justify;">The first row shows the generated image with a inference step of 50, while the second row shows the generated image with a inference step of 100.</p>
+
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_0/stage_2_output_inference_50_0.png" alt="Original Selfie" style="max-width: 500px; max-height: 500px;">
+                <div class="selfie-caption">"a cat riding a horse", step 50</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_0/stage_2_output_inference_50_1.png" alt="Box Filter Result" style="max-width: 500px; max-height: 500px;">
+                <div class="selfie-caption">"a horse riding a cat", step 50</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_0/stage_2_output_inference_50_2.png" alt="Box Filter Result" style="max-width: 500px; max-height: 500px;">
+                <div class="selfie-caption">"a dog driving a car", step 50</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_0/stage_2_output_inference_100_0.png" alt="Original Selfie" style="max-width: 500px; max-height: 500px;">
+                <div class="selfie-caption">"a cat riding a horse", step 100</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_0/stage_2_output_inference_100_1.png" alt="Box Filter Result" style="max-width: 500px; max-height: 500px;">
+                <div class="selfie-caption">"a horse riding a cat", step 100</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_0/stage_2_output_inference_100_2.png" alt="Box Filter Result" style="max-width: 500px; max-height: 500px;">
+                <div class="selfie-caption">"a dog driving a car", step 100</div>
+            </div>
+        </div>
+
+        </div>
+    
+    <div class="part part1">
+        <h2>Part 1.1 and Part 1.2: Forward Pass and Classical Denoising</h2>
+        <p style="text-align: justify;">Part 1.1 implements the forward pass by adding noise according to the noise schedule. The formula used for the forward pass is given by:</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_1/forward_pass_formula.png" alt="homography matrix" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Forward Pass</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">Part 1.2 implements the classical denoising by simply passing the noisy images through a gaussian filter. The comparison and the results from part 1.1 are shown below. images are taken at time steps 250, 500, 750.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_1/classical_denoised.png" alt="homography matrix" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Forward Pass Comparison</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="part part1">
+        <h2>Part 1.3: One-Step Denoising</h2>
+        <p style="text-align: justify;">This part implements the one-step denoising by passing the noisy images through a trained denoising model. The denoising model is a simple MLP that takes in the noisy images and outputs the denoised images. We separately denoise the images at time steps 250, 500, 750.</p>
+
+        <p style="text-align: justify;">t = 250:</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_3/one_step_denoise_250.png" alt="channing_court" style="max-width: 800px; max-height: 500px;">
+                <div class="selfie-caption">One-Step Denoising at Time Step 250</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">t = 500:</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_3/one_step_denoise_500.png" alt="channing_court" style="max-width: 800px; max-height: 500px;">
+                <div class="selfie-caption">One-Step Denoising at Time Step 500</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">t = 750:</p>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_3/one_step_denoise_750.png" alt="channing_court" style="max-width: 800px; max-height: 500px;">
+                <div class="selfie-caption">One-Step Denoising at Time Step 750</div>
+            </div>
+        </div>
+
+    </div>
+    
+    <div class="part part2">
+        <h2>Part 1.4: Iterative Denoising</h2>
+        <p style="text-align: justify;">While the quality of the one-step denoising is not very good, we can improve it by iterating the denoising process. The iterative denoising process is implemented by passing the noisy images through the denoising model multiple times. We separately denoise the images at time steps 250, 500, 750. The formula for iterative denoising is given by:</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_4/iteratie_denoise_formula.png" alt="" style="max-width: 2000px; max-height: 5000px;">
+                <div class="selfie-caption">Iterative Denoising</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">We show the noisy Campanile image during the iterative denoising process.</p>
+
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_4/iterative_denoised_process.png" alt="homography matrix" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Iterative Denoising Process</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">Here is a comparison between the classical denoising, the one-step denoising and the iterative denoising.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_4/iterative_denoised.png" alt="homography matrix" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Comparison between the Classical Denoising, the One-Step Denoising and the Iterative Denoising</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="part part2">
+        <h2>Part 1.5: Diffusion Model Sampling</h2>
+        <p style="text-align: justify;">Here are five sampled images from the diffusion model with the prompt "a high quality photo."</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_5/samples.png" alt="" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Diffusion Model Sampling</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part 1.6: Classifier-Free Guidance</h2>
+        <p style="text-align: justify;">This part implements the classifier-free guidance by estimating the noise with the following formula:</p>
+
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_6/cfg_formula.png" alt="" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Classifier-Free Guidance</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_6/samples_iterative_denoise_cfg.png" alt="" style="max-width: 1000px; max-height: 5000px;">
+                <div class="selfie-caption">Classifier-Free Guidance</div>
+            </div>
+        </div>        
+    </div>
+
+    <div class="part part2">
+        <h2>Part 1.7.1: Image-to-Image Translation</h2>
+        <p style="text-align: justify;">The following images are results from the image-to-image translation. It includes the Campanile image, a web imgae, and two hand-drawn images.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/companile_transform_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/companile_transform_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/companile_transform_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/companile_transform_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/companile_transform_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/companile_transform_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/companile.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, original</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/tom_and_jerry.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Tom and Jerry, original</div>
+            </div>
+        </div>
+
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_cat.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Cat, original</div>
+            </div>
+        </div>
+
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/drawn_doraemon.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Drawn Doraemon, original</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part 1.7.2: Inpainting</h2>
+        <p style="text-align: justify;">This section implements the inpainting technique. in every denoising step, we denoise the whole image. However, only the area with a mask value of 1 is kept. Other areas are reobtained in the next step from redoing the forward pass on the original image. This achieves the effect of only diffusing the masked area with the context unchanged. The following images are examples of the impainted images. </p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_inpainted_Original.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, Original</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_mask_Mask.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, Mask</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_mask_To Replace.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, To Replace</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_inpainted_Inpainted.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile Image, Inpainted</div>
+            </div>
+        </div>
+
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/dog_inpainted_Original.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Dog Image, Original</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/dog_mask_Mask.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Dog Image, Mask</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/dog_mask_To Replace.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Dog Image, To Replace</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/dog_inpainted_Inpainted.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Dog Image, Inpainted</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/charger_inpainted_Original.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Charger Image, Original</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/charger_mask_Mask.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Charger Image, Mask</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/charger_mask_To Replace.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Charger Image, To Replace</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/charger_inpainted_Inpainted.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Charger Image, Inpainted</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="part part2">
+        <h2>Part 1.7.3: Text-Conditional Image-to-image Translation</h2>
+        <p style="text-align: justify;">This section is very similar to the image-to-image translation task. The only difference is that in this task, we use a custom textual prompt instead of a general prompt. The following images are examples of the text-conditional image-to-image translation. </p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/campanile_edited_original.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Campanile, original</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/car_edited_original.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Car, original</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_1.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, i_start = 1</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_3.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, i_start = 3</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_5.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, i_start = 5</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_7.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, i_start = 7</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_10.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, i_start = 10</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_20.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, i_start = 20</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_7/kiwi_edited_original.png" alt="" style="width: 100px !important; height: 100px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Kiwi, original</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part 1.8: Visual Anagrams</h2>
+        <p style="text-align: justify;">This section implements the visual anagrams. In every denoising step, we predict the normal noise and we also predict the noise flipped based on the flipped prompt. We then simply flip the flipped noise back and add them together to get our final perdicted noise. The process is given by the following formula:</p>
+
+    
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_8/visual_anagram.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Classifier-Free Guidance</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_8/flip_illusion_campfire_skull.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Flip Illusion, Campfire + Skull</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_8/flip_illusion_campfire_skull.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important; transform: rotate(180deg) !important;">
+                <div class="selfie-caption">Flip Illusion, Campfire + Skull</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_8/flip_illusion_old_man_campfire.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Flip Illusion, Old Man + Campfire</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_8/flip_illusion_old_man_campfire.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important; transform: rotate(180deg) !important;">
+                <div class="selfie-caption">Flip Illusion, Old Man + Campfire</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_8/flip_illusion_old_man_village.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Flip Illusion, Old Man + Village</div>
+            </div>
+            <div class="selfie-item">
+                    <img src="./part_1_8/flip_illusion_old_man_village.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important; transform: rotate(180deg) !important;">
+                <div class="selfie-caption">Flip Illusion, Old Man + Village</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="part part2">
+        <h2>Part 1.9: Hybrid Images</h2>
+        <p style="text-align: justify;">This section implements hybrid images. This is done by predicting noises both in the low frequency and the high frequency domains. We then add them together to get our final noise. The process is given by the following formula:</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_9/hybrid_image_formula.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Classifier-Free Guidance</div>
+            </div>
+        </div>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_1_9/hybrid_campfire_skull.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Hybrid Images, Campfire + Skull</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_9/hybrid_rocket_ship_pencil.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Hybrid Images, Rocket Ship + Pencil</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_1_9/hybrid_skull_waterfalls.png" alt="" style="width: 200px !important; height: 200px !important; object-fit: contain !important;">
+                <div class="selfie-caption">Hybrid Images, Skull + Waterfalls</div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
