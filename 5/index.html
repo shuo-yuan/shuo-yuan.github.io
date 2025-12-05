@@ -779,6 +779,141 @@
         </div>
     </div>
 
+    <div class="part part2">
+        <h2>Part B.1.1 and Part B.1.2.0: Implement the UNet and Visualizing the Noisy Images</h2>
+        <p style="text-align: justify;">We add Gaussian noise to the image, specified by the noise level. The following images are examples of the noisy images with different noise levels.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/noisy_images.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Visualization of the Noisy Images</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.1.2.1: Training</h2>
+        <p style="text-align: justify;">The UNet is trained on the MNIST dataset with a noise level of 0.5. Here is the training loss curve and the visualization of denoised images after the first and the final epoch.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/training_curve.png" alt="" style="max-width: 500px; max-height: 5000px;">
+                <div class="selfie-caption">Trining Loss Curve</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_b/denoised_images_comparison.png" alt="" style="max-width: 400px; max-height: 5000px;">
+                <div class="selfie-caption">Comparison between the denoised image after the first and the final epoch</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.1.2.2: Out-of-Distribution Testing</h2>
+        <p style="text-align: justify;">This section tests the trained UNet's performance on out-of-distribution data, ie. images with different noise levels. With a larger noise level, the denoising performance seems to drop, which makes sense since the model is not trained on such levels.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/denoising_grid.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Performance of the denoiser on OOD noise levels</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.1.2.3: Denoising Pure Noise</h2>
+        <p style="text-align: justify;">This section trains a UNet to denoise a pure noise. Since the training is not conditioned on the classes, we expect the model to output images that don't look like actual numbers.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/training_curve_pure_noise.png" alt="" style="max-width: 500px; max-height: 5000px;">
+                <div class="selfie-caption">Training Loss Curve for the UNet Trained for Denoising Pure Noises</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_b/pure_noise_denoising.png" alt="" style="max-width: 550px; max-height: 5000px;">
+                <div class="selfie-caption">Sampled Results on Pure Noise for the Model after the First and the Final epoch</div>
+            </div>
+        </div>
+        <p style="text-align: justify;">Notice that the outputted images have features of different numbers in the training dataset. This is because the training is not conditioned on classes; therefore, pure noise can be denoised to any number during the training process.</p>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.2: Training a Flow Matching Model</h2>
+        <p style="text-align: justify;">The one-step denoiser doesn't work well. Therefore, we want to train a denoiser that iteratively denoise the pure noises. We choose to implement the flow matching model in the following sections. We will start with time and class conditioned UNet implementations.</p>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.2.1 and Part B.2.2: Adding Time Conditioning to UNet and Training the UNet</h2>
+        <p style="text-align: justify;">We implement the fully connected block and pass the conditioned time variable before the concatenations. The training loss curve is presented below.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/training_curve_time_conditioned.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Training Loss Curve for the Time-Conditioned UNet</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.2.3: Sampling from the UNet</h2>
+        <p style="text-align: justify;">The following images demonstrate the denoising effects from the trained model after the first, fifth, and the final epoch.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/time_conditioned_sampling.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Sampled Results from the Time-Conditioned UNet</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.2.4 and Part B.2.5: Adding Class-Conditioning to UNet and Training the UNet</h2>
+        <p style="text-align: justify;">To better generate number images, we can further condition the UNet on the classes. The condition is also added with a fully connected block. Below is the training loss curve of the class-conditioned UNet.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/training_curve_class_conditioned.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Training Loss Curve for the Time-Conditioned UNet</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="part part2">
+        <h2>Part B.2.6: Sampling from the UNet</h2>
+        <p style="text-align: justify;">The following images demonstrate the denoising effects from the trained class-conditioned UNet after the first, fifth, and the final epoch. The more the training steps, the better the sampled results.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/class_samples_epoch0.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Sampled Results of the Class-Conditioned Unet after the First Epoch</div>
+            </div>
+        </div>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/class_samples_epochHalf.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Sampled Results of the Class-Conditioned Unet after the Fifth Epoch</div>
+            </div>
+        </div>
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/class_samples_epochFinal.png" alt="" style="max-width: 800px; max-height: 5000px;">
+                <div class="selfie-caption">Sampled Results of the Class-Conditioned Unet after the Final Epoch</div>
+            </div>
+        </div>
+
+        <p style="text-align: justify;">To keep the training process simple, we can get rid of the scheduler and use a constant learning rate instead (perhaps with a smaller learning rate and more training steps). I choose to train the model with a constant learning rate of 1e-3 for 20 epochs. The following images demonstrate the training and sampled results.</p>
+
+        <div class="selfie-row">
+            <div class="selfie-item">
+                <img src="./part_b/training_curve_class_conditioned_no_scheduler.png" alt="" style="max-width: 500px; max-height: 5000px;">
+                <div class="selfie-caption">Training Loss Curve for the Class-Conditioned UNet without the Scheduler</div>
+            </div>
+            <div class="selfie-item">
+                <img src="./part_b/class_samples_epochFinal_no_scheduler.png" alt="" style="max-width: 550px; max-height: 5000px;">
+                <div class="selfie-caption">Sampled Results of the Class-Conditioned Unet after the Final Epoch without the Scheduler</div>
+            </div>
+        </div>
+
+    </div>
 
 </body>
 </html>
