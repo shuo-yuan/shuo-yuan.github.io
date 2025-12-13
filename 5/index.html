@@ -781,7 +781,7 @@
 
     <div class="part part2">
         <h2>Part B.1.1 and Part B.1.2.0: Implement the UNet and Visualizing the Noisy Images</h2>
-        <p style="text-align: justify;">We add Gaussian noise to the image, specified by the noise level. The following images are examples of the noisy images with different noise levels.</p>
+        <p style="text-align: justify;">We add Gaussian noise to the image based on x' = x + l * z, where l is the noise level, z is sampled from a gaussian, x is the original image, and x' is the noisy resulting image. The following images are examples of the noisy images with different noise levels.</p>
 
         <div class="selfie-row">
             <div class="selfie-item">
@@ -793,7 +793,7 @@
 
     <div class="part part2">
         <h2>Part B.1.2.1: Training</h2>
-        <p style="text-align: justify;">The UNet is trained on the MNIST dataset with a noise level of 0.5. Here is the training loss curve and the visualization of denoised images after the first and the final epoch.</p>
+        <p style="text-align: justify;">The UNet is implemented exactly as it shows on the project webpage, with indicidual blocks implemented with PyTorch classes. The UNet is trained on the MNIST dataset with a noise level of 0.5. Here is the training loss curve and the visualization of denoised images after the first and the final epoch.</p>
 
         <div class="selfie-row">
             <div class="selfie-item">
@@ -843,7 +843,7 @@
 
     <div class="part part2">
         <h2>Part B.2.1 and Part B.2.2: Adding Time Conditioning to UNet and Training the UNet</h2>
-        <p style="text-align: justify;">We implement the fully connected block and pass the conditioned time variable before the concatenations. The training loss curve is presented below.</p>
+        <p style="text-align: justify;">We implement the fully connected block and pass the conditioned time variable before the concatenations. This allows the model to learn which time step is this noisy image on. The training loss curve is presented below.</p>
 
         <div class="selfie-row">
             <div class="selfie-item">
