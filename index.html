@@ -1,209 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CS180 Portfolio</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
-        
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-        
-        .project-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        .project-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        }
-        
-        .project-card h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            border-bottom: 3px solid #667eea;
-            padding-bottom: 10px;
-        }
-        
-        .project-card p {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
-        }
-        
-        .project-card .status {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-        
-        .status.completed {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .status.in-progress {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-        }
-        
-        .status.planned {
-            background: #e2e3e5;
-            color: #383d41;
-            border: 1px solid #d6d8db;
-        }
-        
-        .project-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-        }
-        
-        .project-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
-        }
-        
-        .footer {
-            text-align: center;
-            color: white;
-            opacity: 0.8;
-            margin-top: 40px;
-            padding: 20px;
-            border-top: 1px solid rgba(255,255,255,0.2);
-        }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .projects-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-            
-            .project-card {
-                padding: 20px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shuo Yuan</title>
+  <meta name="description" content="Shuo (Shu) Yuan — M.S. student in EECS at UC Berkeley, working on LLM agents and reinforcement learning.">
+  <script>
+    // Apply saved theme before paint to avoid a flash.
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --text: #222222;
+      --muted: #666666;
+      --link: #1a5fb4;
+      --border: #e5e5e5;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --bg: #161618;
+        --text: #e4e4e4;
+        --muted: #9a9a9a;
+        --link: #78aeed;
+        --border: #333336;
+      }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #161618;
+      --text: #e4e4e4;
+      --muted: #9a9a9a;
+      --link: #78aeed;
+      --border: #333336;
+    }
+
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 48px 16px 64px;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .theme-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+    }
+    .theme-toggle:hover { border-color: var(--muted); }
+    @media (max-width: 900px) {
+      .theme-toggle { position: absolute; }
+    }
+
+    header {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    header img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    h1 { font-size: 1.9rem; margin: 0 0 4px; font-weight: 600; }
+    .subtitle { color: var(--muted); margin: 0 0 12px; }
+    .links a { margin-right: 14px; white-space: nowrap; }
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 40px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    ul { padding-left: 20px; margin: 0; }
+    li { margin-bottom: 10px; }
+    .muted { color: var(--muted); }
+    .venue { font-weight: 600; }
+    .row { display: flex; justify-content: space-between; gap: 16px; }
+    .row .date { color: var(--muted); white-space: nowrap; }
+
+    footer {
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      main { padding-top: 64px; }
+      header { flex-direction: column; text-align: center; gap: 16px; }
+      header img { width: 140px; height: 140px; }
+      .links a { margin: 0 7px; }
+      .row { flex-direction: column; gap: 0; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>CS180 Portfolio</h1>
-            <p>Intro to Computer Vision and Computational Photography</p>
-        </div>
-        
-        <div class="projects-grid">
-            <!-- Project 0 -->
-            <div class="project-card">
-                <h2>Project 0: Becoming Friends with Your Camera</h2>
-                <span class="status completed">Completed</span>
-                <p>Exploring camera perspectives and zoom effects through the dolly zoom technique.</p>
-                <a href="./0/index.html" class="project-link">View Project →</a>
-            </div>
-            
-            <!-- Project 1 -->
-            <div class="project-card">
-                <h2>Project 1: Colorizing the Prokudin-Gorskii Photo Collection</h2>
-                <span class="status completed">Completed</span>
-                <p>This project implements automatic colorization of the Prokudin-Gorskii photo collection by aligning the three color channel plates (red, green, blue) that were captured separately.</p>
-                <a href="./1/index.html" class="project-link">View Project →</a>
-            </div>
-            
-            <!-- Project 2 -->
-            <div class="project-card">
-                <h2>Project 2: Fun with Filters and Frequencies!</h2>
-                <span class="status completed">Completed</span>
-                <p>This project implements a variety of filters and frequency-based operations on images, including Gaussian blur, Laplacian, and image blending.</p>
-                <a href="./2/index.html" class="project-link">View Project →</a>
-            </div>
-            
-            <!-- Project 3 -->
-            <div class="project-card">
-                <h2>Project 3: [Auto]Stitching Photo Mosaics</h2>
-                <span class="status completed">Completed</span>
-                <p>This project implements a photo mosaic stitcher that can stitch multiple photos together to create a panorama.</p>
-                <a href="./3/index.html" class="project-link">View Project →</a>
-            </div>
-            
-            <!-- Project 4 -->
-            <div class="project-card">
-                <h2>Project 4: Neural Radience Fields</h2>
-                <span class="status completed">Completed</span>
-                <p>This project implements Neural Radience Field (NeRF) from scratch.</p>
-                <a href="./4/index.html" class="project-link">View Project →</a>
-            </div>
-            
-            <!-- Project 5 -->
-            <div class="project-card">
-                <h2>Project 5: Fun with Diffusion Models</h2>
-                <span class="status completed">Completed</span>
-                <p>This project plays with diffusion models and flow matching. Implemented inpaints, hybrid images, etc. with diffusion models. Implemented flow matching.</p>
-                <a href="./5/index.html" class="project-link">View Project →</a>
-            </div>
-        </div>
-        
-        <div class="footer">
-            <p>This webpage is generated with Cursor. </p>
-        </div>
-    </div>
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+
+  <main>
+    <header>
+      <img src="assets/photo.jpg" alt="Photo of Shuo Yuan">
+      <div>
+        <h1>Shuo (Shu) Yuan</h1>
+        <p class="subtitle">M.S. Student in EECS, UC Berkeley</p>
+        <p class="links">
+          <a href="mailto:shuoyuan@berkeley.edu">Email</a>
+          <a href="assets/cv.pdf">CV</a>
+          <a href="https://github.com/shuo-yuan">GitHub</a>
+        </p>
+      </div>
+    </header>
+
+    <h2>About</h2>
+    <p>
+      I am an M.S. student in Electrical Engineering and Computer Sciences at UC Berkeley,
+      where I also received B.A. degrees in Computer Science and Applied Mathematics
+      (Highest Distinction). I do research in the
+      <a href="https://sky.cs.berkeley.edu/">Sky Computing Lab</a>, advised by
+      Prof. <a href="https://people.eecs.berkeley.edu/~jegonzal/">Joseph Gonzalez</a> and
+      Prof. <a href="https://people.eecs.berkeley.edu/~istoica/">Ion Stoica</a>.
+      My interests are LLM agents, reinforcement learning for LLMs, and tool use.
+    </p>
+
+    <h2>Publications</h2>
+    <ul>
+      <li>
+        <a href="https://openreview.net/pdf?id=uFOIp7fRaE">RLEM: Reinforcement Learning for External Memory</a><br>
+        <span class="muted">Dacheng Li, Shiyi Cao, Fangzhou Zhao, <strong>Shuo Yuan</strong>, Sumanth R. Hegde, Joseph E. Gonzalez, Ion Stoica</span><br>
+        <span class="venue">COLM 2026 Efficient Reasoning Workshop</span>
+      </li>
+      <li>
+        <a href="https://arxiv.org/pdf/2511.16108v1">SkyRL-Agent: Efficient RL Training for Multi-turn LLM Agent</a><br>
+        <span class="muted">Shiyi Cao, Dacheng Li, Fangzhou Zhao, <strong>Shuo Yuan</strong>, Sumanth R. Hegde, Connor Chen, Charlie Ruan, Tyler Griggs, Shu Liu, Eric Tang, Richard Liaw, Philipp Moritz, Matei Zaharia, Joseph E. Gonzalez, Ion Stoica</span><br>
+        <span class="venue">Preprint</span>
+      </li>
+      <li>
+        <a href="https://openreview.net/pdf?id=VNPGUGbC1p">SkyRL-SQL: Multi-turn SQL Data Agents via RL</a><br>
+        <span class="muted">Shu Liu, Alan Zhu, Sumanth Hegde, Shiyi Cao, <strong>Shuo Yuan</strong>, Samion Suwito, Tyler Griggs, Matei Zaharia, Joseph E. Gonzalez, Ion Stoica</span><br>
+        <span class="venue">NeurIPS 2025 MTI-LLM Workshop</span>
+      </li>
+      <li>
+        <a href="https://arxiv.org/pdf/2509.00997">Supporting Our AI Overlords: Redesigning Data Systems to be Agent-first</a><br>
+        <span class="muted">Shu Liu, Soujanya Ponnapalli, Shreya Shankar, Sepanta Zeighami, Alan Zhu, Shubham Agarwal, Ruiqi Chen, Samion Suwito, <strong>Shuo Yuan</strong>, Ion Stoica, Matei Zaharia, Alvin Cheung, Natacha Crooks, Joseph E. Gonzalez, Aditya G. Parameswaran</span><br>
+        <span class="venue">CIDR 2026</span>
+      </li>
+    </ul>
+
+    <h2>Research</h2>
+    <ul>
+      <li>
+        <div class="row"><strong>D-Skill: Distilling Teacher Knowledge through Agent Skills</strong><span class="date">2026</span></div>
+        Distills paired teacher–student agent trajectories into reusable natural-language skills,
+        closing 82–95% of the teacher–student gap at 5.7–8.2× lower inference cost. <span class="muted">Project lead; in submission to ICLR 2027.</span>
+      </li>
+      <li>
+        <div class="row"><strong>I-PTC: Interactive Programmatic Tool Calling</strong><span class="date">2026</span></div>
+        A stateful, notebook-style tool-calling framework for LLM agents, plus PTC-Bench,
+        a 240-task benchmark for long-horizon tool use. <span class="muted">Project lead; NeurIPS 2026.</span>
+      </li>
+      <li>
+        <div class="row"><strong>RLEM: Reinforcement Learning for External Memory</strong><span class="date">2025 – 2026</span></div>
+        Trainable external memory with step-wise GRPO, letting LLMs handle contexts up to ~1M tokens.
+      </li>
+      <li>
+        <div class="row"><strong>SkyRL-Agent: Computer Use Agent Post-Training</strong><span class="date">2025</span></div>
+        Async, distributed RL training for computer-use agents, scaling from 8 to 128 environments.
+      </li>
+      <li>
+        <div class="row"><strong>SkyRL-SQL: Multi-turn SQL Data Agents via RL</strong><span class="date">2025</span></div>
+        Multi-turn GRPO training for SQL agents that improves Spider accuracy by 7% with only 600 examples.
+      </li>
+    </ul>
+
+    <h2>Teaching &amp; Service</h2>
+    <ul>
+      <li><div class="row"><span>Reader, EECS 183: Natural Language Processing</span><span class="date">Fall 2026</span></div></li>
+      <li><div class="row"><span>Undergraduate Student Instructor, CS 170: Efficient Algorithms and Intractable Problems</span><span class="date">2024 – 2026</span></div></li>
+      <li><div class="row"><span>Reviewer, NeurIPS 2025 MTI-LLM Workshop</span><span class="date">2025</span></div></li>
+    </ul>
+
+    <h2>Other Projects</h2>
+    <ul>
+      <li><a href="https://linalg-app.vercel.app">Linear Algebra Games</a> — interactive web games for Berkeley's MATH 56, with Prof. David Nadler.</li>
+      <li><a href="cs180.html">CS 180 Projects</a> — coursework for Intro to Computer Vision and Computational Photography.</li>
+    </ul>
+
+    <footer>Last updated September 2026</footer>
+  </main>
+
+  <script>
+    (function () {
+      var root = document.documentElement;
+      var btn = document.getElementById('theme-toggle');
+      var mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+      function isDark() {
+        var t = root.getAttribute('data-theme');
+        return t ? t === 'dark' : mq.matches;
+      }
+      function render() {
+        btn.textContent = isDark() ? '☀' : '☾';
+        btn.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+
+      btn.addEventListener('click', function () {
+        var next = isDark() ? 'light' : 'dark';
+        root.setAttribute('data-theme', next);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+        render();
+      });
+      mq.addEventListener && mq.addEventListener('change', render);
+      render();
+    })();
+  </script>
 </body>
 </html>

@@ -1,4 +1,6 @@
 # shuo-yuan.github.io
 
 Personal website for Shuo (Shu) Yuan.
-Currently used for COMPSCI 180 Projects.
+
+- `index.html` — homepage
+- `cs180.html` — COMPSCI 180 project portfolio (projects in `0/` – `5/`)
