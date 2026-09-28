@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shuo Yuan</title>
-  <meta name="description" content="Shuo (Shu) Yuan — M.S. student in EECS at UC Berkeley, working on LLM agents and reinforcement learning.">
+  <meta name="description" content="Shuo Yuan — M.S. student in EECS at UC Berkeley, working on LLM agents and reinforcement learning.">
   <script>
     // Apply saved theme before paint to avoid a flash.
     (function () {
@@ -87,11 +87,12 @@
     header img {
       width: 180px;
       height: 180px;
-      border-radius: 50%;
+      border-radius: 12px;
       object-fit: cover;
       flex-shrink: 0;
     }
     h1 { font-size: 1.9rem; margin: 0 0 4px; font-weight: 600; }
+    h1 .zh { font-weight: 400; margin-left: 6px; }
     .subtitle { color: var(--muted); margin: 0 0 12px; }
     .links a { margin-right: 14px; white-space: nowrap; }
 
@@ -106,6 +107,7 @@
     li { margin-bottom: 10px; }
     .muted { color: var(--muted); }
     .venue { font-weight: 600; }
+    .note { font-size: 0.9rem; margin: 8px 0 0; }
     .row { display: flex; justify-content: space-between; gap: 16px; }
     .row .date { color: var(--muted); white-space: nowrap; }
 
@@ -131,7 +133,7 @@
     <header>
       <img src="assets/photo.jpg" alt="Photo of Shuo Yuan">
       <div>
-        <h1>Shuo (Shu) Yuan</h1>
+        <h1>Shuo Yuan <span class="zh">袁烁</span></h1>
         <p class="subtitle">M.S. Student in EECS, UC Berkeley</p>
         <p class="links">
           <a href="mailto:shuoyuan@berkeley.edu">Email</a>
@@ -143,17 +145,29 @@
 
     <h2>About</h2>
     <p>
-      I am an M.S. student in Electrical Engineering and Computer Sciences at UC Berkeley,
-      where I also received B.A. degrees in Computer Science and Applied Mathematics
-      (Highest Distinction). I do research in the
-      <a href="https://sky.cs.berkeley.edu/">Sky Computing Lab</a>, advised by
-      Prof. <a href="https://people.eecs.berkeley.edu/~jegonzal/">Joseph Gonzalez</a> and
-      Prof. <a href="https://people.eecs.berkeley.edu/~istoica/">Ion Stoica</a>.
-      My interests are LLM agents, reinforcement learning for LLMs, and tool use.
+      I am a 5th-year M.S. Student in EECS at UC Berkeley, fortunately advised by
+      Prof. <a href="https://people.eecs.berkeley.edu/~jegonzal/">Joseph Gonzalez</a>.
+      I am currently in the <a href="https://sky.cs.berkeley.edu/">Sky Computing Lab</a>
+      and am interested in agentic LLMs and LLM post-training.
+    </p>
+    <p>
+      I completed my Bachelor&rsquo;s degrees with double majors in Computer Science and
+      Applied Mathematics with the Highest Distinction in general scholarship.
+      Extended acknowledgement to <a href="https://dachengli1.github.io">Dacheng Li</a> for his mentorship on research.
     </p>
 
     <h2>Publications</h2>
     <ul>
+      <li>
+        I-PTC: Interactive Programmatic Tool Calling for Stateful Tool-Augmented Agents<br>
+        <span class="muted"><strong>Shuo Yuan</strong>*, Huanzhi Mao*, Chengkun Cao*, Joseph E. Gonzalez</span><br>
+        <span class="venue">NeurIPS 2026</span>
+      </li>
+      <li>
+        D-Skill: Distilling Teacher Knowledge through Agent Skills<br>
+        <span class="muted"><strong>Shuo Yuan</strong>, Dacheng Li, Joseph E. Gonzalez</span><br>
+        <span class="venue">In submission to ICLR 2027</span>
+      </li>
       <li>
         <a href="https://openreview.net/pdf?id=uFOIp7fRaE">RLEM: Reinforcement Learning for External Memory</a><br>
         <span class="muted">Dacheng Li, Shiyi Cao, Fangzhou Zhao, <strong>Shuo Yuan</strong>, Sumanth R. Hegde, Joseph E. Gonzalez, Ion Stoica</span><br>
@@ -175,32 +189,7 @@
         <span class="venue">CIDR 2026</span>
       </li>
     </ul>
-
-    <h2>Research</h2>
-    <ul>
-      <li>
-        <div class="row"><strong>D-Skill: Distilling Teacher Knowledge through Agent Skills</strong><span class="date">2026</span></div>
-        Distills paired teacher–student agent trajectories into reusable natural-language skills,
-        closing 82–95% of the teacher–student gap at 5.7–8.2× lower inference cost. <span class="muted">Project lead; in submission to ICLR 2027.</span>
-      </li>
-      <li>
-        <div class="row"><strong>I-PTC: Interactive Programmatic Tool Calling</strong><span class="date">2026</span></div>
-        A stateful, notebook-style tool-calling framework for LLM agents, plus PTC-Bench,
-        a 240-task benchmark for long-horizon tool use. <span class="muted">Project lead; NeurIPS 2026.</span>
-      </li>
-      <li>
-        <div class="row"><strong>RLEM: Reinforcement Learning for External Memory</strong><span class="date">2025 – 2026</span></div>
-        Trainable external memory with step-wise GRPO, letting LLMs handle contexts up to ~1M tokens.
-      </li>
-      <li>
-        <div class="row"><strong>SkyRL-Agent: Computer Use Agent Post-Training</strong><span class="date">2025</span></div>
-        Async, distributed RL training for computer-use agents, scaling from 8 to 128 environments.
-      </li>
-      <li>
-        <div class="row"><strong>SkyRL-SQL: Multi-turn SQL Data Agents via RL</strong><span class="date">2025</span></div>
-        Multi-turn GRPO training for SQL agents that improves Spider accuracy by 7% with only 600 examples.
-      </li>
-    </ul>
+    <p class="muted note">* Equal contribution</p>
 
     <h2>Teaching &amp; Service</h2>
     <ul>
@@ -212,6 +201,7 @@
     <h2>Other Projects</h2>
     <ul>
       <li><a href="https://linalg-app.vercel.app">Linear Algebra Games</a> — interactive web games for Berkeley's MATH 56, with Prof. David Nadler.</li>
+      <li><a href="https://shuo-yuan.github.io/eecs106a-project-page/">EECS 106A Project: RoboMath</a> — final project for Introduction to Robotics.</li>
       <li><a href="cs180.html">CS 180 Projects</a> — coursework for Intro to Computer Vision and Computational Photography.</li>
     </ul>
 
