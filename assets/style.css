@@ -54,7 +54,7 @@ a:hover { text-decoration: underline; }
   justify-content: space-between;
   gap: 16px;
 }
-.site-header .brand { color: var(--text); font-weight: 600; }
+.site-header .brand { color: var(--text); font-weight: 600; white-space: nowrap; }
 .nav-links { display: flex; align-items: center; gap: 20px; }
 .nav-links a { color: var(--muted); }
 .nav-links a[aria-current="page"] { color: var(--text); font-weight: 500; }
@@ -130,4 +130,9 @@ footer {
   .courses .code { width: 7.25em; }
   .courses td { padding: 7px 12px 7px 0; }
   .courses .grade { padding-right: 0; }
+}
+
+@media (max-width: 360px) {
+  .site-header nav { font-size: 15px; }
+  .nav-links { gap: 10px; }
 }

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life · Shuo Yuan</title>
+  <meta name="description" content="Life outside research — Shuo Yuan.">
+  <script>
+    // Apply saved theme before paint to avoid a flash.
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav>
+      <a class="brand" href="index.html">Shuo Yuan</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="education.html">Education</a>
+        <a href="life.html" aria-current="page">Life</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Life</h1>
+    <p class="muted">Coming soon.</p>
+  </main>
+
+  <script src="assets/theme.js"></script>
+</body>
+</html>
