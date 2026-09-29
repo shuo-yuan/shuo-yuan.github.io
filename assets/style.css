@@ -95,6 +95,7 @@ a:hover { text-decoration: underline; }
   -webkit-tap-highlight-color: transparent;
 }
 .photo-stack.single { cursor: default; }
+.photo-stack.large { width: 300px; height: 300px; margin: 20px 0 12px; }
 .photo-stack:focus-visible { outline: 2px solid var(--link); outline-offset: 8px; border-radius: 14px; }
 .photo-stack img {
   position: absolute;
@@ -150,7 +151,6 @@ li { margin-bottom: 10px; }
 .travel-map svg { display: block; width: 100%; height: auto; }
 .travel-map .country { fill: var(--map-land); stroke: var(--bg); stroke-width: 0.5; }
 .travel-map .country.visited { fill: var(--map-visited); }
-.travel-map .country:hover { opacity: 0.8; }
 
 footer {
   margin-top: 48px;
@@ -162,6 +162,7 @@ footer {
   .nav-links { gap: 14px; }
   .intro { flex-direction: column; text-align: center; gap: 16px; }
   .photo-stack { width: 180px; height: 180px; }
+  .photo-stack.large { width: 240px; height: 240px; }
   .links a { margin: 0 7px; }
   .row { flex-direction: column; gap: 0; }
   .courses .code { width: 7.25em; }

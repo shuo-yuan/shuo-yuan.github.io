@@ -49,9 +49,6 @@
         var p = document.createElementNS(SVG_NS, 'path');
         p.setAttribute('d', path(f));
         p.setAttribute('class', isVisited ? 'country visited' : 'country');
-        var title = document.createElementNS(SVG_NS, 'title');
-        title.textContent = name;
-        p.appendChild(title);
         svg.appendChild(p);
       });
 
