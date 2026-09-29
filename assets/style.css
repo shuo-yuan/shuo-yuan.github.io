@@ -1,0 +1,127 @@
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --text: #222222;
+  --muted: #666666;
+  --link: #1a5fb4;
+  --border: #e5e5e5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #161618;
+    --text: #e4e4e4;
+    --muted: #9a9a9a;
+    --link: #78aeed;
+    --border: #333336;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #161618;
+  --text: #e4e4e4;
+  --muted: #9a9a9a;
+  --link: #78aeed;
+  --border: #333336;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+}
+main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 16px 64px;
+}
+a { color: var(--link); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Site header */
+.site-header { border-bottom: 1px solid var(--border); }
+.site-header nav {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.site-header .brand { color: var(--text); font-weight: 600; }
+.nav-links { display: flex; align-items: center; gap: 20px; }
+.nav-links a { color: var(--muted); }
+.nav-links a[aria-current="page"] { color: var(--text); font-weight: 500; }
+
+.theme-toggle {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+.theme-toggle:hover { border-color: var(--muted); }
+
+/* Homepage intro */
+.intro {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.intro img {
+  width: 220px;
+  height: 220px;
+  border-radius: 12px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+h1 { font-size: 1.9rem; margin: 0 0 4px; font-weight: 600; }
+h1 .zh {
+  font-family: "LXGW WenKai TC", "Kaiti SC", "STKaiti", serif;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.subtitle { color: var(--muted); margin: 0 0 12px; }
+.links a { margin-right: 14px; white-space: nowrap; }
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 40px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+h3 { font-size: 1rem; font-weight: 600; margin: 20px 0 8px; }
+ul { padding-left: 20px; margin: 0; }
+li { margin-bottom: 10px; }
+.muted { color: var(--muted); }
+.venue { font-weight: 600; }
+.note { font-size: 0.9rem; margin: 8px 0 0; }
+.row { display: flex; justify-content: space-between; gap: 16px; }
+.row .date { color: var(--muted); white-space: nowrap; }
+.compact li { margin-bottom: 4px; }
+
+footer {
+  margin-top: 48px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .nav-links { gap: 14px; }
+  .intro { flex-direction: column; text-align: center; gap: 16px; }
+  .intro img { width: 180px; height: 180px; }
+  .links a { margin: 0 7px; }
+  .row { flex-direction: column; gap: 0; }
+}

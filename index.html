@@ -17,128 +17,22 @@
       } catch (e) {}
     })();
   </script>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #ffffff;
-      --text: #222222;
-      --muted: #666666;
-      --link: #1a5fb4;
-      --border: #e5e5e5;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root:not([data-theme="light"]) {
-        color-scheme: dark;
-        --bg: #161618;
-        --text: #e4e4e4;
-        --muted: #9a9a9a;
-        --link: #78aeed;
-        --border: #333336;
-      }
-    }
-    :root[data-theme="dark"] {
-      color-scheme: dark;
-      --bg: #161618;
-      --text: #e4e4e4;
-      --muted: #9a9a9a;
-      --link: #78aeed;
-      --border: #333336;
-    }
-
-    * { box-sizing: border-box; }
-    html { -webkit-text-size-adjust: 100%; }
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-    main {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 48px 16px 64px;
-    }
-    a { color: var(--link); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    .theme-toggle {
-      position: fixed;
-      top: 16px;
-      right: 16px;
-      width: 36px;
-      height: 36px;
-      border: 1px solid var(--border);
-      border-radius: 50%;
-      background: var(--bg);
-      color: var(--text);
-      font-size: 16px;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .theme-toggle:hover { border-color: var(--muted); }
-    @media (max-width: 900px) {
-      .theme-toggle { position: absolute; }
-    }
-
-    header {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-    }
-    header img {
-      width: 220px;
-      height: 220px;
-      border-radius: 12px;
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-    h1 { font-size: 1.9rem; margin: 0 0 4px; font-weight: 600; }
-    h1 .zh {
-      font-family: "LXGW WenKai TC", "Kaiti SC", "STKaiti", serif;
-      font-weight: 400;
-      letter-spacing: 0.05em;
-      color: var(--muted);
-    }
-    .subtitle { color: var(--muted); margin: 0 0 12px; }
-    .links a { margin-right: 14px; white-space: nowrap; }
-
-    h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 40px 0 12px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-    }
-    ul { padding-left: 20px; margin: 0; }
-    li { margin-bottom: 10px; }
-    .muted { color: var(--muted); }
-    .venue { font-weight: 600; }
-    .note { font-size: 0.9rem; margin: 8px 0 0; }
-    .row { display: flex; justify-content: space-between; gap: 16px; }
-    .row .date { color: var(--muted); white-space: nowrap; }
-
-    footer {
-      margin-top: 48px;
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 600px) {
-      main { padding-top: 64px; }
-      header { flex-direction: column; text-align: center; gap: 16px; }
-      header img { width: 180px; height: 180px; }
-      .links a { margin: 0 7px; }
-      .row { flex-direction: column; gap: 0; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+  <header class="site-header">
+    <nav>
+      <a class="brand" href="index.html">Shuo Yuan</a>
+      <div class="nav-links">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="courses.html">Courses</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </div>
+    </nav>
+  </header>
 
   <main>
-    <header>
+    <section class="intro">
       <img src="assets/photo.jpg" alt="Photo of Shuo Yuan">
       <div>
         <h1>Shuo Yuan <span class="zh">「袁烁」</span></h1>
@@ -147,9 +41,10 @@
           <a href="mailto:shuoyuan@berkeley.edu">Email</a>
           <a href="assets/cv.pdf">CV</a>
           <a href="https://github.com/shuo-yuan">GitHub</a>
+          <a href="https://www.linkedin.com/in/shuo-yuan-395a7b281">LinkedIn</a>
         </p>
       </div>
-    </header>
+    </section>
 
     <h2>About</h2>
     <p>
@@ -222,30 +117,6 @@
     <footer>Last updated September 2026</footer>
   </main>
 
-  <script>
-    (function () {
-      var root = document.documentElement;
-      var btn = document.getElementById('theme-toggle');
-      var mq = window.matchMedia('(prefers-color-scheme: dark)');
-
-      function isDark() {
-        var t = root.getAttribute('data-theme');
-        return t ? t === 'dark' : mq.matches;
-      }
-      function render() {
-        btn.textContent = isDark() ? '☀' : '☾';
-        btn.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
-      }
-
-      btn.addEventListener('click', function () {
-        var next = isDark() ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        try { localStorage.setItem('theme', next); } catch (e) {}
-        render();
-      });
-      mq.addEventListener && mq.addEventListener('change', render);
-      render();
-    })();
-  </script>
+  <script src="assets/theme.js"></script>
 </body>
 </html>

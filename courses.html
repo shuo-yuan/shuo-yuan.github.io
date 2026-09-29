@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Courses · Shuo Yuan</title>
+  <meta name="description" content="Courses taken by Shuo Yuan at UC Berkeley.">
+  <script>
+    // Apply saved theme before paint to avoid a flash.
+    (function () {
+      try {
+        var t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav>
+      <a class="brand" href="index.html">Shuo Yuan</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="courses.html" aria-current="page">Courses</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle dark mode"></button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Courses</h1>
+
+    <h2>Education</h2>
+    <ul>
+      <li><div class="row"><span><strong>M.S. in Electrical Engineering and Computer Sciences</strong>, UC Berkeley</span><span class="date">2026 – Present</span></div></li>
+      <li><div class="row"><span><strong>B.A. in Computer Science and Applied Mathematics</strong>, UC Berkeley</span><span class="date">2022 – 2026</span></div></li>
+    </ul>
+
+    <h2>Coursework</h2>
+    <h3>Computer Science &amp; EECS</h3>
+    <ul class="compact">
+      <li>Deep Learning</li>
+      <li>Machine Learning</li>
+      <li>Deep Reinforcement Learning</li>
+      <li>Natural Language Processing</li>
+      <li>Computer Vision</li>
+      <li>Advanced LLM Agents</li>
+      <li>Robotics</li>
+      <li>Database Systems</li>
+      <li>Algorithms</li>
+      <li>Data Structures</li>
+      <li>Optimization</li>
+      <li>Probability and Random Processes</li>
+    </ul>
+
+    <h3>Mathematics</h3>
+    <ul class="compact">
+      <li>Real Analysis</li>
+      <li>Abstract Linear Algebra</li>
+      <li>Abstract Algebra</li>
+      <li>Numerical Analysis</li>
+      <li>Advanced Matrix Computation</li>
+    </ul>
+
+    <p class="muted note">See also my <a href="https://www.linkedin.com/in/shuo-yuan-395a7b281">LinkedIn</a>.</p>
+
+    <footer>Last updated September 2026</footer>
+  </main>
+
+  <script src="assets/theme.js"></script>
+</body>
+</html>
