@@ -11,14 +11,25 @@
     .map(function (s) { return s.trim(); })
     .filter(Boolean);
 
-  var summary = document.getElementById('visited-summary');
-  if (summary) summary.textContent = visited.length + ' countries: ' + visited.join(', ');
+  // The atlas draws French Guiana as part of France; give it its own (unvisited) shape.
+  function splitFrenchGuiana(f) {
+    if (f.properties.name !== 'France' || f.geometry.type !== 'MultiPolygon') return [f];
+    var europe = [], guiana = [];
+    f.geometry.coordinates.forEach(function (poly) {
+      (poly[0][0][0] < -30 ? guiana : europe).push(poly);
+    });
+    return [
+      { type: 'Feature', properties: { name: 'France' }, geometry: { type: 'MultiPolygon', coordinates: europe } },
+      { type: 'Feature', properties: { name: 'French Guiana' }, geometry: { type: 'MultiPolygon', coordinates: guiana } }
+    ];
+  }
 
   fetch(ATLAS)
     .then(function (res) { return res.json(); })
     .then(function (world) {
       var countries = topojson.feature(world, world.objects.countries).features
-        .filter(function (f) { return f.properties.name !== 'Antarctica'; });
+        .filter(function (f) { return f.properties.name !== 'Antarctica'; })
+        .reduce(function (out, f) { return out.concat(splitFrenchGuiana(f)); }, []);
       var all = { type: 'FeatureCollection', features: countries };
       var projection = d3.geoNaturalEarth1().fitWidth(WIDTH, all);
       var path = d3.geoPath(projection);
