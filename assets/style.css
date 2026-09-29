@@ -129,7 +129,6 @@ footer {
   .row { flex-direction: column; gap: 0; }
   .courses .code { width: 7.25em; }
   .courses td { padding: 7px 12px 7px 0; }
-  .courses .grade { padding-right: 0; }
 }
 
 @media (max-width: 360px) {
