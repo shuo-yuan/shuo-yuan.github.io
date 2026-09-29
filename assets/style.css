@@ -5,6 +5,8 @@
   --muted: #666666;
   --link: #1a5fb4;
   --border: #e5e5e5;
+  --map-land: #dcdcdc;
+  --map-visited: #1a5fb4;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -14,6 +16,8 @@
     --muted: #9a9a9a;
     --link: #78aeed;
     --border: #333336;
+    --map-land: #3a3a3e;
+    --map-visited: #78aeed;
   }
 }
 :root[data-theme="dark"] {
@@ -23,6 +27,8 @@
   --muted: #9a9a9a;
   --link: #78aeed;
   --border: #333336;
+  --map-land: #3a3a3e;
+  --map-visited: #78aeed;
 }
 
 * { box-sizing: border-box; }
@@ -138,6 +144,13 @@ li { margin-bottom: 10px; }
 .courses td { padding: 8px 24px 8px 0; vertical-align: top; }
 .courses .code { width: 9em; white-space: nowrap; color: var(--muted); }
 .courses .grade { width: 2em; padding-right: 0; text-align: right; color: var(--muted); }
+
+/* Life page world map (assets/travel-map.js) */
+.travel-map { margin-top: 8px; }
+.travel-map svg { display: block; width: 100%; height: auto; }
+.travel-map .country { fill: var(--map-land); stroke: var(--bg); stroke-width: 0.5; }
+.travel-map .country.visited { fill: var(--map-visited); }
+.travel-map .country:hover { opacity: 0.8; }
 
 footer {
   margin-top: 48px;

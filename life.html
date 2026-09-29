@@ -5,8 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Life · Shuo Yuan</title>
   <meta name="description" content="Life outside research — Shuo Yuan.">
-  <link rel="stylesheet" href="assets/style.css?v=2">
-  <script src="assets/theme.js?v=2"></script>
+  <link rel="stylesheet" href="assets/style.css?v=3">
+  <script src="assets/theme.js?v=3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-array@3.2.4/dist/d3-array.min.js" integrity="sha384-VpKMdU+TlpggHFip46tJ/xkFUs8NFBwLqUMo3+3uiu411lU6eUQYsHVU+JFpA5ja" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/dist/d3-geo.min.js" integrity="sha384-VNiKRUXp0MmglFfqDwkfuk+Y78C3WTJShdKSaFwOacLR3UmamxHIJLBTD3BadIXD" crossorigin="anonymous" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous" defer></script>
+  <script src="assets/travel-map.js?v=3" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -23,8 +27,23 @@
 
   <main>
     <h1>Life</h1>
-    <p class="muted">Coming soon.</p>
-  </main>
 
+    <h2>Snowboarding</h2>
+    <p class="muted">Coming soon.</p>
+
+    <h2>Soccer</h2>
+    <p class="muted">Coming soon.</p>
+
+    <h2>Photography</h2>
+    <p class="muted">Coming soon.</p>
+
+    <h2>Traveling</h2>
+    <!-- Countries I've visited: separate with ";" and use the map's country names
+         (e.g. "United States of America", "South Korea"). -->
+    <div class="travel-map" data-visited="China; United States of America; United Kingdom; Switzerland; France; Netherlands; South Korea; Italy">
+      <p class="muted">Loading map…</p>
+    </div>
+    <p class="muted note" id="visited-summary"></p>
+  </main>
 </body>
 </html>

@@ -1,0 +1,56 @@
+// Life page world map: countries listed in data-visited are highlighted, the rest stay gray.
+(function () {
+  var el = document.querySelector('.travel-map');
+  if (!el) return;
+
+  var ATLAS = 'https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json';
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var WIDTH = 960;
+
+  var visited = el.getAttribute('data-visited').split(';')
+    .map(function (s) { return s.trim(); })
+    .filter(Boolean);
+
+  var summary = document.getElementById('visited-summary');
+  if (summary) summary.textContent = visited.length + ' countries: ' + visited.join(', ');
+
+  fetch(ATLAS)
+    .then(function (res) { return res.json(); })
+    .then(function (world) {
+      var countries = topojson.feature(world, world.objects.countries).features
+        .filter(function (f) { return f.properties.name !== 'Antarctica'; });
+      var all = { type: 'FeatureCollection', features: countries };
+      var projection = d3.geoNaturalEarth1().fitWidth(WIDTH, all);
+      var path = d3.geoPath(projection);
+      var height = Math.ceil(path.bounds(all)[1][1]);
+
+      var svg = document.createElementNS(SVG_NS, 'svg');
+      svg.setAttribute('viewBox', '0 0 ' + WIDTH + ' ' + height);
+      svg.setAttribute('role', 'img');
+      svg.setAttribute('aria-label', 'World map highlighting countries visited: ' + visited.join(', '));
+
+      var found = {};
+      countries.forEach(function (f) {
+        var name = f.properties.name;
+        var isVisited = visited.indexOf(name) !== -1;
+        if (isVisited) found[name] = true;
+
+        var p = document.createElementNS(SVG_NS, 'path');
+        p.setAttribute('d', path(f));
+        p.setAttribute('class', isVisited ? 'country visited' : 'country');
+        var title = document.createElementNS(SVG_NS, 'title');
+        title.textContent = name;
+        p.appendChild(title);
+        svg.appendChild(p);
+      });
+
+      visited.forEach(function (name) {
+        if (!found[name]) console.warn('travel-map: "' + name + '" is not a country name on the map');
+      });
+
+      el.replaceChildren(svg);
+    })
+    .catch(function () {
+      el.innerHTML = '<p class="muted">The map could not be loaded.</p>';
+    });
+})();
