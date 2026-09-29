@@ -7,4 +7,4 @@ Personal website for Shuo Yuan, served by GitHub Pages.
 - `life.html` — life (coming soon)
 - `cs180.html` — COMPSCI 180 project portfolio (projects in `0/` – `5/`)
 - `courses.html` — redirects old links to `education.html`
-- `assets/` — shared `style.css` and `theme.js` (light/dark toggle), photo, CV
+- `assets/` — shared `style.css`, `theme.js` (light/dark toggle), `photo-stack.js` (homepage photos), photos, CV

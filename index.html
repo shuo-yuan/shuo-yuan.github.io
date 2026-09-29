@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC&text=%E3%80%8C%E8%A2%81%E7%83%81%E3%80%8D&display=swap">
   <link rel="stylesheet" href="assets/style.css">
   <script src="assets/theme.js"></script>
+  <script src="assets/photo-stack.js" defer></script>
 </head>
 <body>
   <header class="site-header">
@@ -26,7 +27,11 @@
 
   <main>
     <section class="intro">
-      <img src="assets/photo.jpg" alt="Photo of Shuo Yuan">
+      <!-- Click to cycle photos. The first one starts on top; add more <img> lines to add photos. -->
+      <div class="photo-stack" role="button" tabindex="0" aria-label="Show next photo">
+        <img src="assets/photo.jpg" alt="Photo of Shuo Yuan">
+        <img src="assets/photo-2.jpg" alt="Photo of Shuo Yuan">
+      </div>
       <div>
         <h1>Shuo Yuan <span class="zh">「袁烁」</span></h1>
         <p class="subtitle">M.S. Student in EECS, UC Berkeley</p>
