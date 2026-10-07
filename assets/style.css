@@ -138,6 +138,9 @@ li { margin-bottom: 10px; }
 .muted { color: var(--muted); }
 .venue { font-weight: 600; }
 .note { font-size: 0.9rem; margin: 8px 0 0; }
+/* Heading with a small note beside it (wraps under the heading on narrow screens) */
+h2.with-note { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 12px; row-gap: 2px; }
+h2.with-note .note { margin: 0; font-weight: 400; }
 .row { display: flex; justify-content: space-between; gap: 16px; }
 .row .date { color: var(--muted); white-space: nowrap; }
 .gpa {
