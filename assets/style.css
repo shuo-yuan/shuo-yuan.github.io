@@ -140,6 +140,18 @@ li { margin-bottom: 10px; }
 .note { font-size: 0.9rem; margin: 8px 0 0; }
 .row { display: flex; justify-content: space-between; gap: 16px; }
 .row .date { color: var(--muted); white-space: nowrap; }
+.gpa {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
 /* Education page: collapsible course lists (native <details>) */
 .course-group summary {
   display: flex;
@@ -188,6 +200,7 @@ footer {
   .photo-stack.large { width: 240px; height: 240px; }
   .links a { margin: 0 7px; }
   .row { flex-direction: column; gap: 0; }
+  .gpa { margin-left: 0; }
   .courses .code { width: 8em; }
   .courses td { padding: 7px 12px 7px 0; }
 }
