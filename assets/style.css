@@ -94,21 +94,38 @@ a:hover { text-decoration: underline; }
   box-shadow: 0 0 0 1px var(--border), 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
-/* Life page: photos side by side; tiles shrink together on narrow screens */
+/* Life page: photos side by side, all the same size. On narrow phones every tile
+   shrinks equally so three still fit in a row (100vw minus page padding and gaps). */
 .photo-row {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 240px);
-  gap: 12px;
+  --tile: min(140px, calc((100vw - 32px - 20px) / 3));
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
   margin: 16px 0 8px;
 }
+.photo-row a { display: block; cursor: zoom-in; }
 .photo-row img {
   display: block;
-  width: 100%;
-  aspect-ratio: 1;
+  width: var(--tile);
+  height: var(--tile);
   object-fit: cover;
-  border-radius: 12px;
-  box-shadow: 0 0 0 1px var(--border), 0 2px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+/* Enlarged photo (assets/lightbox.js) */
+.lightbox {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  max-width: none;
+  max-height: none;
+  cursor: zoom-out;
+}
+.lightbox::backdrop { background: rgba(0, 0, 0, 0.85); }
+.lightbox img {
+  display: block;
+  max-width: 92vw;
+  max-height: 92vh;
 }
 h1 { font-size: 1.9rem; margin: 0 0 4px; font-weight: 600; }
 h1 .zh {
@@ -194,7 +211,6 @@ footer {
   .nav-links { gap: 14px; }
   .intro { flex-direction: column; text-align: center; gap: 16px; }
   .avatar { width: 180px; height: 180px; }
-  .photo-row { gap: 8px; }
   .links a { margin: 0 7px; }
   .row { flex-direction: column; gap: 0; }
   .gpa { margin-left: 0; }
