@@ -109,6 +109,7 @@ a:hover { text-decoration: underline; }
   width: var(--tile);
   height: var(--tile);
   object-fit: cover;
+  border-radius: 8px;
   box-shadow: 0 0 0 1px var(--border);
 }
 
@@ -126,6 +127,7 @@ a:hover { text-decoration: underline; }
   display: block;
   max-width: 92vw;
   max-height: 92vh;
+  border-radius: 10px;
 }
 h1 { font-size: 1.9rem; margin: 0 0 4px; font-weight: 600; }
 h1 .zh {
